@@ -50,13 +50,38 @@ class HomeScreenViewModel @Inject constructor(private val webService: WebService
     )
 
     init {
-        getMovies()
+        getNowPlaying()
+        getPopular()
+        getUpcoming()
+        getTopRated()
     }
 
-    private fun getMovies() {
+    private fun getNowPlaying() {
         viewModelScope.launch {
             val nowPlaying = safeApiCall(Dispatchers.IO) { webService.getNowPLaying(1) }
             _nowPlaying.emit(nowPlaying)
         }
     }
+
+    private fun getPopular() {
+        viewModelScope.launch {
+            val popular = safeApiCall((Dispatchers.IO)) { webService.getPopular(1) }
+            _popular.emit(popular)
+        }
+    }
+
+    private fun getTopRated() {
+        viewModelScope.launch {
+            val topRated = safeApiCall((Dispatchers.IO)) { webService.getTopRated(1) }
+            _topRated.emit(topRated)
+        }
+    }
+
+    private fun getUpcoming() {
+        viewModelScope.launch {
+            val upcoming = safeApiCall((Dispatchers.IO)) { webService.getUpcoming(1) }
+            _upcoming.emit(upcoming)
+        }
+    }
+
 }

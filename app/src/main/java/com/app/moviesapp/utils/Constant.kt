@@ -7,5 +7,7 @@ object Constant {
     const val DATA_STORE_NAME = "my_datastore"
     const val ROOM_DATA_BASE_NAME = "my_db"
     const val BASE_POSTER_URL = "https://image.tmdb.org/t/p/w500"
+    const val  TYPE = "{type}"
+    const val  ID = "{id}"
 
 }
