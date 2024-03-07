@@ -1,5 +1,10 @@
 package com.app.moviesapp.data.response
 
+import android.os.Parcelable
+import com.app.moviesapp.utils.Constant
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class MovieResponse(
     val adult: Boolean,
     val backdrop_path: String? = null,
@@ -15,4 +20,8 @@ data class MovieResponse(
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Int
-)
+): Parcelable{
+    fun getImagePath(): String {
+        return Constant.BASE_POSTER_URL + poster_path
+    }
+}

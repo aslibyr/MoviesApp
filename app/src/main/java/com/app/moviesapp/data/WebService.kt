@@ -10,14 +10,17 @@ interface WebService {
     suspend fun getNowPLaying(
         @Query("page") page: Int
     ): BasePagingResponse<MovieResponse>
+
     @GET("movie/popular")
     suspend fun getPopular(
         @Query("page") page: Int
     ): BasePagingResponse<MovieResponse>
+
     @GET("movie/top_rated")
     suspend fun getTopRated(
         @Query("page") page: Int
     ): BasePagingResponse<MovieResponse>
+
     @GET("movie/upcoming")
     suspend fun getUpcoming(
         @Query("page") page: Int
