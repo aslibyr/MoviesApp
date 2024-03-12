@@ -1,22 +1,28 @@
 package com.app.moviesapp.ui
 
+import android.os.Build
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -27,15 +33,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.Color
+
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
 import coil.compose.AsyncImage
 import com.app.moviesapp.R
 import com.app.moviesapp.base.BasePagingResponse
+import com.app.moviesapp.custom.indicator.DotsIndicator
 import com.app.moviesapp.custom.navigation.graphs.MovieListType
 import com.app.moviesapp.data.response.MovieResponse
 import com.app.moviesapp.ui.home.HomeScreenViewModel
@@ -43,6 +51,8 @@ import com.app.moviesapp.utils.Constant
 import com.app.moviesapp.utils.ResultWrapper
 import com.app.moviesapp.utils.ScreenRoutes
 
+@RequiresApi(Build.VERSION_CODES.S)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
     viewModel: HomeScreenViewModel = hiltViewModel(),
@@ -77,6 +87,43 @@ fun HomeScreen(
             is ResultWrapper.Success -> {
                 val response =
                     (nowPlayingState as ResultWrapper.Success<BasePagingResponse<MovieResponse>>).value
+
+                val pagerState = rememberPagerState(
+                    initialPage = 0,
+                    initialPageOffsetFraction = 0f,
+                    pageCount = { response.results.take(10).size }
+                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(450.dp)
+                ) {
+                    HorizontalPager(
+                        state = pagerState,
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        val url = response.results[it].getImagePath()
+                        AsyncImage(
+                            model = url,
+                            contentDescription = "",
+                            modifier = Modifier
+                                .fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                    DotsIndicator(
+                        totalDots = response.results.take(10).size,
+                        selectedIndex = pagerState.currentPage,
+                        modifier = Modifier
+                            .wrapContentSize()
+                            .align(Alignment.BottomCenter)
+                            .padding(bottom = 16.dp)
+                    )
+                }
+
+
+
                 MoviesWidget(
                     movies = response.results,
                     stringResource(R.string.now_playing),
@@ -207,7 +254,7 @@ fun MoviesWidgetItem(movie: MovieResponse, onMovieClick: (String) -> Unit) {
             .clip(RoundedCornerShape(topEnd = 20.dp, topStart = 20.dp))
             .clickable {
                 onMovieClick(
-                    ScreenRoutes.LIST_DETAIL_ROUTE.replace(
+                    ScreenRoutes.ITEM_DETAIL_ROUTE.replace(
                         oldValue = Constant.ID,
                         newValue = movie.id.toString()
                     )

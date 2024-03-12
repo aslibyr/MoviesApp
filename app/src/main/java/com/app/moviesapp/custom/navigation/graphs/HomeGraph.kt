@@ -1,5 +1,7 @@
 package com.app.moviesapp.custom.navigation.graphs
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -11,6 +13,7 @@ import com.app.moviesapp.ui.home.HomeListScreen
 import com.app.moviesapp.ui.home.ListDetailScreen
 import com.app.moviesapp.utils.ScreenRoutes
 
+@RequiresApi(Build.VERSION_CODES.S)
 fun NavGraphBuilder.homeGraph(
     navController: NavController,
     shouldBottomBarVisible: (Boolean) -> Unit
@@ -42,14 +45,14 @@ fun NavGraphBuilder.homeGraph(
             HomeListScreen()
         }
         composable(
-            route = ScreenRoutes.LIST_DETAIL_ROUTE,
+            route = ScreenRoutes.ITEM_DETAIL_ROUTE,
             arguments = listOf(
                 navArgument("id") {
                     type = NavType.StringType
                 }
             )
         ) {
-            ListDetailScreen()
+            ListDetailScreen(onBackClick = { navController.popBackStack() })
         }
     }
 }
