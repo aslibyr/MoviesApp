@@ -1,6 +1,7 @@
 package com.app.moviesapp.data
 
 import com.app.moviesapp.base.BasePagingResponse
+import com.app.moviesapp.data.response.MovieCreditResponse
 import com.app.moviesapp.data.response.MovieDetailResponse
 import com.app.moviesapp.data.response.MovieResponse
 import retrofit2.http.GET
@@ -32,5 +33,10 @@ interface WebService {
     suspend fun getMovieDetails(
         @Path("movie_id")  id: String
     ): MovieDetailResponse
+    @GET("movie/{movie_id}/credits")
+    suspend fun getMovieCredits(
+        @Path("movie_id")  id: String
+    ): MovieCreditResponse
+
 
 }

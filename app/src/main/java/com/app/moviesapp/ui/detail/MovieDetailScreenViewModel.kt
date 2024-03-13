@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.moviesapp.data.WebService
+import com.app.moviesapp.data.response.MovieCreditResponseItem
 import com.app.moviesapp.data.response.MovieDetailResponse
 import com.app.moviesapp.utils.ResultWrapper
 import com.app.moviesapp.utils.safeApiCall
@@ -29,6 +30,8 @@ class ItemDetailScreenViewModel @Inject constructor(
 
     init {
         getMovieDetails(id = id)
+        getMovieCredits(id = id)
+
     }
 
 
@@ -42,8 +45,45 @@ class ItemDetailScreenViewModel @Inject constructor(
                         it.copy(
                             movieDetailData = response.value,
                             isLoading = false,
-                            isSuccess = true
+                            successCount = _uiState.value.successCount.plus(1)
                         )
+                    }
+                }
+
+                is ResultWrapper.GenericError -> {
+                    _uiState.update {
+                        it.copy(errorMessage = response.error.toString())
+                    }
+                }
+
+                ResultWrapper.Loading -> {
+                    _uiState.update {
+                        it.copy(isLoading = true)
+                    }
+                }
+
+                ResultWrapper.NetworkError -> {
+                    _uiState.update {
+                        it.copy(errorMessage = "İnternet bağlantınızı kontrol edin.")
+                    }
+                }
+            }
+        }
+    }
+    private fun getMovieCredits(id: String) {
+        viewModelScope.launch {
+            when (val response = safeApiCall(Dispatchers.IO) {
+                webService.getMovieCredits(id)
+            }) {
+                is ResultWrapper.Success -> {
+                    response.value.cast?.let {castList ->
+                        _uiState.update {
+                            it.copy(
+                                movieCast = castList,
+                                successCount = _uiState.value.successCount.plus(1),
+                                isLoading = false,
+                            )
+                        }
                     }
                 }
 
@@ -71,7 +111,8 @@ class ItemDetailScreenViewModel @Inject constructor(
 
 data class MovieDetailUIStateModel(
     val movieDetailData: MovieDetailResponse? = null,
+    val movieCast : List<MovieCreditResponseItem> = emptyList(),
     val isLoading: Boolean = true,
     val errorMessage: String = "",
-    val isSuccess: Boolean = false
+    val successCount : Int = 0
 )
