@@ -1,4 +1,4 @@
-package com.app.moviesapp.ui
+package com.app.moviesapp.ui.home
 
 import android.os.Build
 import android.widget.Toast
@@ -33,7 +33,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -46,7 +45,6 @@ import com.app.moviesapp.base.BasePagingResponse
 import com.app.moviesapp.custom.indicator.DotsIndicator
 import com.app.moviesapp.custom.navigation.graphs.MovieListType
 import com.app.moviesapp.data.response.MovieResponse
-import com.app.moviesapp.ui.home.HomeScreenViewModel
 import com.app.moviesapp.utils.Constant
 import com.app.moviesapp.utils.ResultWrapper
 import com.app.moviesapp.utils.ScreenRoutes
@@ -254,7 +252,7 @@ fun MoviesWidgetItem(movie: MovieResponse, onMovieClick: (String) -> Unit) {
             .clip(RoundedCornerShape(topEnd = 20.dp, topStart = 20.dp))
             .clickable {
                 onMovieClick(
-                    ScreenRoutes.ITEM_DETAIL_ROUTE.replace(
+                    ScreenRoutes.MOVIE_DETAIL_ROUTE.replace(
                         oldValue = Constant.ID,
                         newValue = movie.id.toString()
                     )

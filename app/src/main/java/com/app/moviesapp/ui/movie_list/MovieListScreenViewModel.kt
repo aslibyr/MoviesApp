@@ -1,4 +1,4 @@
-package com.app.moviesapp.ui.home
+package com.app.moviesapp.ui.movie_list
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeListScreenViewModel @Inject constructor(savedStateHandle: SavedStateHandle) : ViewModel(){
+class MovieListScreenViewModel @Inject constructor(savedStateHandle: SavedStateHandle) : ViewModel(){
     val type = checkNotNull(savedStateHandle.get<String>("type"))
 
     init {

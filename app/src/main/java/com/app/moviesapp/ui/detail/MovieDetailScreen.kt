@@ -1,4 +1,4 @@
-package com.app.moviesapp.ui.home
+package com.app.moviesapp.ui.detail
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

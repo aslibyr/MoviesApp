@@ -8,9 +8,9 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.app.moviesapp.ui.HomeScreen
-import com.app.moviesapp.ui.home.HomeListScreen
-import com.app.moviesapp.ui.home.ListDetailScreen
+import com.app.moviesapp.ui.home.HomeScreen
+import com.app.moviesapp.ui.detail.ListDetailScreen
+import com.app.moviesapp.ui.movie_list.MovieListScreen
 import com.app.moviesapp.utils.ScreenRoutes
 
 @RequiresApi(Build.VERSION_CODES.S)
@@ -42,10 +42,10 @@ fun NavGraphBuilder.homeGraph(
                 }
             )
         ) {
-            HomeListScreen()
+            MovieListScreen()
         }
         composable(
-            route = ScreenRoutes.ITEM_DETAIL_ROUTE,
+            route = ScreenRoutes.MOVIE_DETAIL_ROUTE,
             arguments = listOf(
                 navArgument("id") {
                     type = NavType.StringType
