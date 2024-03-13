@@ -12,7 +12,6 @@ import com.app.moviesapp.data.WebService
 import com.app.moviesapp.data.paging.MoviePagingSource
 import com.app.moviesapp.data.response.MovieResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
