@@ -38,5 +38,11 @@ interface WebService {
         @Path("movie_id")  id: String
     ): MovieCreditResponse
 
+    @GET("search/movie")
+    suspend fun getSearchMovieApi(
+        @Query("page") page: Int,
+        @Query("query") query: String
+    ): BasePagingResponse<MovieResponse>
+
 
 }
