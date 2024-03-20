@@ -30,7 +30,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,6 +40,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.app.moviesapp.R
 import com.app.moviesapp.base.BasePagingResponse
@@ -61,10 +61,10 @@ fun HomeScreen(
 
 ) {
     val context = LocalContext.current
-    val nowPlayingState by viewModel.nowPlaying.collectAsState()
-    val popularState by viewModel.popular.collectAsState()
-    val topRatedState by viewModel.topRated.collectAsState()
-    val upcomingState by viewModel.upcoming.collectAsState()
+    val nowPlayingState by viewModel.nowPlaying.collectAsStateWithLifecycle()
+    val popularState by viewModel.popular.collectAsStateWithLifecycle()
+    val topRatedState by viewModel.topRated.collectAsStateWithLifecycle()
+    val upcomingState by viewModel.upcoming.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
