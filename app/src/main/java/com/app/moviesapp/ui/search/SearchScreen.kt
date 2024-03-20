@@ -53,7 +53,7 @@ fun SearchScreen(
             text = text,
             returnText = { text = it },
             onImeClicked = {
-                           viewModel.searchMovie(text,uiState.page)
+                           viewModel.searchMovie(text,1)
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Done),
 

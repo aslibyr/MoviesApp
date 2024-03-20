@@ -46,8 +46,11 @@ import com.app.moviesapp.R
 import com.app.moviesapp.base.BasePagingResponse
 import com.app.moviesapp.custom.indicator.DotsIndicator
 import com.app.moviesapp.custom.navigation.graphs.MovieListType
+import com.app.moviesapp.custom.widget.MovieWidget
+import com.app.moviesapp.custom.widget.MovieWidgetComponentModel
 import com.app.moviesapp.data.response.MovieResponse
 import com.app.moviesapp.utils.Constant
+import com.app.moviesapp.utils.MovieWidgetModel
 import com.app.moviesapp.utils.ResultWrapper
 import com.app.moviesapp.utils.ScreenRoutes
 
@@ -124,10 +127,10 @@ fun HomeScreen(
 
 
 
-                MoviesWidget(
-                    movies = response.results,
-                    stringResource(R.string.now_playing),
-                    onMovieClick,
+                MovieWidget(
+                    model = MovieWidgetComponentModel(
+                        widgetCategory = "Now Playing",
+                        movies = response.results.map { it.MovieWidgetModel() }),
                     openListScreen = {
                         openListScreen(
                             ScreenRoutes.HOME_LIST_ROUTE.replace(
@@ -135,7 +138,9 @@ fun HomeScreen(
                                 newValue = MovieListType.NOW_PLAYING.type
                             )
                         )
-                    })
+                    },
+                    onMovieClick,
+                )
             }
         }
         when (popularState) {
@@ -151,15 +156,18 @@ fun HomeScreen(
             is ResultWrapper.Success -> {
                 val response =
                     (popularState as ResultWrapper.Success<BasePagingResponse<MovieResponse>>).value
-                MoviesWidget(movies = response.results, "Popular", onMovieClick,
-                    openListScreen = {
-                        openListScreen(
-                            ScreenRoutes.HOME_LIST_ROUTE.replace(
-                                oldValue = Constant.TYPE,
-                                newValue = MovieListType.POPULAR.type
-                            )
+                MovieWidget(model = MovieWidgetComponentModel(
+                    widgetCategory = stringResource(R.string.popular),
+                    movies = response.results.map { it.MovieWidgetModel() }
+                ), openListScreen = {
+                    openListScreen(
+                        ScreenRoutes.HOME_LIST_ROUTE.replace(
+                            oldValue = Constant.TYPE,
+                            newValue = MovieListType.POPULAR.type
                         )
-                    })
+                    )
+                }, onMovieClick
+                )
             }
         }
         when (topRatedState) {
@@ -175,7 +183,10 @@ fun HomeScreen(
             is ResultWrapper.Success -> {
                 val response =
                     (topRatedState as ResultWrapper.Success<BasePagingResponse<MovieResponse>>).value
-                MoviesWidget(movies = response.results, "Top Rated", onMovieClick,
+                MovieWidget(
+                    model = MovieWidgetComponentModel(
+                        widgetCategory = "Top Rated",
+                        movies = response.results.map { it.MovieWidgetModel() }),
                     openListScreen = {
                         openListScreen(
                             ScreenRoutes.HOME_LIST_ROUTE.replace(
@@ -183,7 +194,9 @@ fun HomeScreen(
                                 newValue = MovieListType.TOP_RATED.type
                             )
                         )
-                    })
+                    },
+                    onMovieClick,
+                )
             }
         }
         when (upcomingState) {
@@ -199,7 +212,10 @@ fun HomeScreen(
             is ResultWrapper.Success -> {
                 val response =
                     (upcomingState as ResultWrapper.Success<BasePagingResponse<MovieResponse>>).value
-                MoviesWidget(movies = response.results, "Upcoming", onMovieClick,
+                MovieWidget(
+                    model = MovieWidgetComponentModel(
+                        widgetCategory = "Upcoming",
+                        movies = response.results.map { it.MovieWidgetModel() }),
                     openListScreen = {
                         openListScreen(
                             ScreenRoutes.HOME_LIST_ROUTE.replace(
@@ -207,75 +223,10 @@ fun HomeScreen(
                                 newValue = MovieListType.UPCOMING.type
                             )
                         )
-                    })
-            }
-        }
-    }
-}
-
-@Composable
-fun MoviesWidget(
-    movies: List<MovieResponse>,
-    category: String,
-    onMovieClick: (String) -> Unit,
-    openListScreen: () -> Unit
-) {
-    Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .clickable { openListScreen() },
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = category, style = MaterialTheme.typography.bodyMedium
-            )
-            Icon(
-                imageVector = Icons.Filled.ArrowForwardIos,
-                contentDescription = "",
-                modifier = Modifier.size(20.dp)
-            )
-        }
-        LazyRow() {
-            items(movies) {
-                MoviesWidgetItem(movie = it, onMovieClick = onMovieClick)
-            }
-        }
-    }
-}
-
-@Composable
-fun MoviesWidgetItem(movie: MovieResponse, onMovieClick: (String) -> Unit) {
-    Column(
-        modifier = Modifier
-            .padding(8.dp)
-            .clip(RoundedCornerShape(topEnd = 20.dp, topStart = 20.dp))
-            .clickable {
-                onMovieClick(
-                    ScreenRoutes.MOVIE_DETAIL_ROUTE.replace(
-                        oldValue = Constant.ID,
-                        newValue = movie.id.toString()
-                    )
+                    },
+                    onMovieClick,
                 )
-            },
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        Card(
-            modifier = Modifier
-                .padding(8.dp),
-            elevation = CardDefaults.cardElevation(5.dp),
-            shape = RoundedCornerShape(15.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.White)
-        ) {
-            AsyncImage(model = movie.getImagePath(), contentDescription = "")
-            Text(
-                modifier = Modifier.padding(8.dp),
-                text = movie.title,
-                style = MaterialTheme.typography.bodyMedium
-            )
+            }
         }
     }
 }
