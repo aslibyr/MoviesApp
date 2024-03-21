@@ -24,12 +24,14 @@ fun ListDetailScreen(
         }
     }
     Column(modifier = Modifier.fillMaxSize()) {
-        if (uiState.successCount >= 2) {
+        if (uiState.successCount >= 5) {
             uiState.movieDetailData?.title.let {
                 if (it != null) {
                     Text(text = it)
                 }
             }
+        } else {
+            Text(text = "error")
         }
     }
 }
