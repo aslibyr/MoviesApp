@@ -3,6 +3,7 @@ package com.app.moviesapp.data
 import com.app.moviesapp.base.BasePagingResponse
 import com.app.moviesapp.data.response.MovieCreditResponse
 import com.app.moviesapp.data.response.MovieDetailResponse
+import com.app.moviesapp.data.response.MovieImageResponse
 import com.app.moviesapp.data.response.MovieResponse
 import com.app.moviesapp.data.response.MovieReviewsResponse
 import retrofit2.http.GET
@@ -63,5 +64,8 @@ interface WebService {
         @Query("page") page: Int
     ): MovieReviewsResponse
 
-
+    @GET("movie/{movie_id}/images")
+    suspend fun getImages(
+        @Path("movie_id") id: String,
+    ): MovieImageResponse
 }

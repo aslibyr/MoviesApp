@@ -25,11 +25,11 @@ class ItemDetailScreenViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) :
     ViewModel() {
-
     private val id = checkNotNull(savedStateHandle.get<String>("id"))
 
     private val _uiState = MutableStateFlow(MovieDetailUIStateModel())
     val uiState = _uiState.asStateFlow()
+
 
     init {
         getMovieDetails(id = id)
@@ -37,6 +37,7 @@ class ItemDetailScreenViewModel @Inject constructor(
         getMovieRecommendations(id = id, 1)
         getMovieSimilar(id = id, 1)
         getMovieReviews(id = id, 1)
+        getImages(id = id)
     }
 
 
@@ -221,9 +222,48 @@ class ItemDetailScreenViewModel @Inject constructor(
             }
         }
     }
+
+    private fun getImages(id: String) {
+        viewModelScope.launch {
+            when (val response = safeApiCall(Dispatchers.IO) {
+                webService.getImages(id)
+            }) {
+                is ResultWrapper.GenericError -> {
+                    _uiState.update {
+                        it.copy(errorMessage = response.error.toString())
+                    }
+                }
+
+                ResultWrapper.Loading -> {
+                    _uiState.update {
+                        it.copy(isLoading = true)
+                    }
+                }
+
+                ResultWrapper.NetworkError -> {
+                    _uiState.update {
+                        it.copy(errorMessage = "İnternet bağlantınızı kontrol edin.")
+                    }
+                }
+
+                is ResultWrapper.Success -> {
+                    val images = response.value.posters.filter { it.iso_639_1 == "en" }
+
+                    _uiState.update {
+                        it.copy(
+                            images = images.map { it.getImagePath() },
+                            isLoading = false,
+                            successCount = _uiState.value.successCount.plus(1)
+                        )
+                    }
+                }
+            }
+        }
+    }
 }
 
 data class MovieDetailUIStateModel(
+    val images: List<String> = emptyList(),
     val movieDetailData: MovieDetailResponse? = null,
     val movieCastData: List<MovieCreditResponseItem> = emptyList(),
     val movieRecommendations: BasePagingResponse<MovieResponse>? = null,
