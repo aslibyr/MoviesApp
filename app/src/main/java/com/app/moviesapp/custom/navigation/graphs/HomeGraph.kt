@@ -8,7 +8,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.app.moviesapp.ui.detail.ListDetailScreen
+import com.app.moviesapp.ui.detail.DetailScreen
 import com.app.moviesapp.ui.home.HomeScreen
 import com.app.moviesapp.ui.movie_list.MovieListScreen
 import com.app.moviesapp.utils.ScreenRoutes
@@ -54,7 +54,7 @@ fun NavGraphBuilder.homeGraph(
                 }
             )
         ) {
-            ListDetailScreen(onBackClick = { navController.popBackStack() })
+            DetailScreen(onBackClick = { navController.popBackStack() })
         }
     }
 }

@@ -5,7 +5,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Newspaper
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material3.Icon
@@ -64,12 +63,8 @@ fun BottomBar(
             icon = Icons.Filled.Search,
             route = ScreenRoutes.SEARCH_ROUTE
         ),
-        BottomNavigationItem(
-            title = "3",
-            icon = Icons.Filled.Newspaper,
-            route = ScreenRoutes.MOVIE_DETAIL_ROUTE
+
         )
-    )
 
 
     NavigationBar(
