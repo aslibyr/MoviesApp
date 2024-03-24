@@ -1,6 +1,9 @@
 package com.app.moviesapp.data.response
 
+import android.os.Parcelable
+import com.app.moviesapp.utils.Constant
 import com.squareup.moshi.Json
+import kotlinx.parcelize.Parcelize
 
 data class MovieCreditResponse(
 	@Json(name="id")
@@ -10,6 +13,8 @@ data class MovieCreditResponse(
 	val cast: List<MovieCreditResponseItem>? = null,
 
 )
+
+@Parcelize
 data class MovieCreditResponseItem(
 
 	@Json(name="cast_id")
@@ -47,4 +52,8 @@ data class MovieCreditResponseItem(
 
 	@Json(name="order")
 	val order: Int? = null
-)
+) : Parcelable {
+	fun getImagePath(): String {
+		return Constant.BASE_POSTER_URL + profilePath
+	}
+}
