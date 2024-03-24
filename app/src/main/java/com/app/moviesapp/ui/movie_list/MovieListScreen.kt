@@ -3,15 +3,21 @@ package com.app.moviesapp.ui.movie_list
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,9 +26,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
+import com.app.moviesapp.custom.buttons.ListResetButton
 import com.app.moviesapp.data.response.MovieResponse
 import com.app.moviesapp.utils.Constant
 import com.app.moviesapp.utils.ScreenRoutes
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -34,17 +42,40 @@ fun MovieListScreen(
     val movies: LazyPagingItems<MovieResponse> =
         viewModel.movies.collectAsLazyPagingItems()
 
-    Column(
+    val listState = rememberLazyGridState()
+    val scope = rememberCoroutineScope()
+    val isScrollButtonVisible by rememberSaveable {
+        mutableStateOf(false)
+    }
+
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(
-                MaterialTheme.colorScheme.onPrimary
-            ), horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        LazyVerticalGrid(columns = GridCells.Fixed(2)) {
-            items(movies.itemCount) {
-                MoviesListItem(movie = movies[it]!!, onMovieClick = onMovieClick)
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    MaterialTheme.colorScheme.onPrimary
+                )
+        ) {
+            LazyVerticalGrid(columns = GridCells.Fixed(2), state = listState) {
+                items(movies.itemCount) {
+                    MoviesListItem(movie = movies[it]!!, onMovieClick = onMovieClick)
+                }
             }
+            //if (isScrollButtonVisible) {
+            Box(
+                modifier = Modifier
+                    .padding(bottom = 100.dp)
+            ) {
+                ListResetButton {
+                    scope.launch {
+                        listState.animateScrollToItem(0)
+                    }
+                }
+            }
+            //}
         }
     }
 }
