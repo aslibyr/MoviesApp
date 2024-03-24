@@ -14,8 +14,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -44,9 +46,10 @@ fun MovieListScreen(
 
     val listState = rememberLazyGridState()
     val scope = rememberCoroutineScope()
-    val isScrollButtonVisible by rememberSaveable {
-        mutableStateOf(false)
+    val isScrollButtonVisible by remember {
+        derivedStateOf { listState.firstVisibleItemIndex >= 3 }
     }
+
 
     Box(
         modifier = Modifier
@@ -64,18 +67,13 @@ fun MovieListScreen(
                     MoviesListItem(movie = movies[it]!!, onMovieClick = onMovieClick)
                 }
             }
-            //if (isScrollButtonVisible) {
-            Box(
-                modifier = Modifier
-                    .padding(bottom = 100.dp)
-            ) {
+            if (isScrollButtonVisible) {
                 ListResetButton {
                     scope.launch {
                         listState.animateScrollToItem(0)
                     }
                 }
             }
-            //}
         }
     }
 }

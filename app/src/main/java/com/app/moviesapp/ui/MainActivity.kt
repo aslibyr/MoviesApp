@@ -1,8 +1,9 @@
-package com.app.moviesapp
+package com.app.moviesapp.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -26,21 +27,18 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             MoviesAppTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Scaffold(
-                        bottomBar = {
-                            BottomBar(navController = navController)
-                        }
-                    ) { paddingValues ->
 
-                        MainNavigation(
-                            navController = navController,
-                            modifier = Modifier.padding(paddingValues)
-                        )
+                Scaffold(
+                    modifier = Modifier.background(MaterialTheme.colorScheme.background).fillMaxSize(),
+                    bottomBar = {
+                        BottomBar(navController = navController)
                     }
+                ) { paddingValues ->
+
+                    MainNavigation(
+                        navController = navController,
+                        modifier = Modifier.padding(paddingValues)
+                    )
                 }
             }
         }

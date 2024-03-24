@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForwardIos
@@ -27,12 +29,11 @@ import com.app.moviesapp.data.response.MovieCreditResponse
 
 @Composable
 fun CastWidget(
-    model: MovieCreditResponse,
+    model: CastWidgetComponentModel,
     openCastListScreen: () -> Unit,
-    onMovieClick: (String) -> Unit
 ) {
 
-    Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column(modifier = Modifier.fillMaxWidth().wrapContentHeight(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -51,7 +52,7 @@ fun CastWidget(
         }
         LazyRow(Modifier.fillMaxWidth(), contentPadding = PaddingValues(start = 16.dp)) {
             items(model.cast) { cast ->
-                CastWidget(model =) {
+                CastWidgetItem(cast =cast) {
 
                 }
             }

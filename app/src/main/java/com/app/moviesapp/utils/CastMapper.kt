@@ -1,4 +1,4 @@
-package com.app.moviesapp.custom
+package com.app.moviesapp.utils
 
 import com.app.moviesapp.custom.widget.CastWidgetModel
 import com.app.moviesapp.data.response.MovieCreditResponseItem
@@ -7,6 +7,7 @@ fun MovieCreditResponseItem.CastWidgetModel(): CastWidgetModel {
     return CastWidgetModel(
         castName = this.name ?: "",
         character = this.character ?: "",
-        profilePath = this.getImagePath()
+        profilePath = this.getImagePath(),
+        personId = this.id ?: 0
     )
 }

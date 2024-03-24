@@ -27,12 +27,12 @@ fun BoxScope.ListResetButton(
     onClick: () -> Unit
 ) {
     Card(
-        shape = RoundedCornerShape(20.dp),
+        shape = RoundedCornerShape(50.dp),
         modifier = Modifier
-            .width(60.dp)
-            .height(60.dp)
-            .padding(end = 16.dp, bottom = 16.dp)
-            .align(Alignment.Center)
+            .padding(bottom = 100.dp, end = 16.dp)
+            .align(Alignment.BottomEnd)
+            .width(48.dp)
+            .height(48.dp)
             .fillMaxSize()
             .clickable {
                 // Kullanıcı düğmeye bastığında listenin en üstüne kaydırma işlemi

@@ -1,5 +1,6 @@
 package com.app.moviesapp.ui.detail
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -33,7 +34,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.app.moviesapp.custom.indicator.PagerIndicator
+import com.app.moviesapp.custom.widget.CastWidget
+import com.app.moviesapp.custom.widget.CastWidgetComponentModel
 import com.app.moviesapp.data.response.MovieDetailResponse
+import com.app.moviesapp.utils.CastWidgetModel
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -62,6 +66,7 @@ fun DetailScreen(
                     movie = movie,
                     image = uiState.images,
                     onBackClick = onBackClick,
+                    castModel = CastWidgetComponentModel("Cast Ekibi", cast = uiState.movieCastData.map { it.CastWidgetModel() }),
                     pagerState = pagerState
                 )
             }
@@ -77,10 +82,12 @@ fun MovieDetailUI(
     movie: MovieDetailResponse,
     image: List<String>,
     pagerState: PagerState,
+    castModel : CastWidgetComponentModel,
     onBackClick: () -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize().padding(bottom = 100.dp),
     ) {
         Box {
             HorizontalPager(state = pagerState) { page ->
@@ -127,6 +134,10 @@ fun MovieDetailUI(
             )
         }
         movie.overview?.let { Text(text = it, fontSize = 14.sp) }
+        
+        CastWidget(model = castModel) {
+            
+        }
     }
 }
 
