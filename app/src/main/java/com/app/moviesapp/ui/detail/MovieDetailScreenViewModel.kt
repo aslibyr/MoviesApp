@@ -247,7 +247,7 @@ class ItemDetailScreenViewModel @Inject constructor(
                 }
 
                 is ResultWrapper.Success -> {
-                    val images = response.value.posters.filter { it.iso_639_1 == "en" }
+                    val images = response.value.posters.filter { it.iso_639_1 == "en" }.take(10)
 
                     _uiState.update {
                         it.copy(
