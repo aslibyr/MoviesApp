@@ -18,7 +18,7 @@ data class MovieCreditResponse(
 data class MovieCreditResponseItem(
 
 	@Json(name="cast_id")
-	val castId: Int? = null,
+	val cast_id: Int? = null,
 
 	@Json(name="character")
 	val character: String? = null,
@@ -27,13 +27,13 @@ data class MovieCreditResponseItem(
 	val gender: Int? = null,
 
 	@Json(name="credit_id")
-	val creditId: String? = null,
+	val credit_id: String? = null,
 
 	@Json(name="known_for_department")
-	val knownForDepartment: String? = null,
+	val known_for_department: String? = null,
 
 	@Json(name="original_name")
-	val originalName: String? = null,
+	val original_name: String? = null,
 
 	@Json(name="popularity")
 	val popularity: Double? = null,
@@ -42,7 +42,7 @@ data class MovieCreditResponseItem(
 	val name: String? = null,
 
 	@Json(name="profile_path")
-	val profilePath: String? = null,
+	val profile_path: String? = null,
 
 	@Json(name="id")
 	val id: Int? = null,
@@ -54,6 +54,6 @@ data class MovieCreditResponseItem(
 	val order: Int? = null
 ) : Parcelable {
 	fun getImagePath(): String {
-		return Constant.BASE_POSTER_URL + profilePath
+		return Constant.BASE_POSTER_URL + profile_path
 	}
 }
