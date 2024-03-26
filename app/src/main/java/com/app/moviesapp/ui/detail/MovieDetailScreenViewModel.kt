@@ -3,12 +3,12 @@ package com.app.moviesapp.ui.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.app.moviesapp.custom.mapper.MovieWidgetModel
 import com.app.moviesapp.custom.widget.MovieWidgetModel
 import com.app.moviesapp.data.WebService
 import com.app.moviesapp.data.response.MovieCreditResponseItem
 import com.app.moviesapp.data.response.MovieDetailResponse
 import com.app.moviesapp.data.response.MovieReviewsResponse
-import com.app.moviesapp.utils.MovieWidgetModel
 import com.app.moviesapp.utils.ResultWrapper
 import com.app.moviesapp.utils.safeApiCall
 import dagger.hilt.android.lifecycle.HiltViewModel

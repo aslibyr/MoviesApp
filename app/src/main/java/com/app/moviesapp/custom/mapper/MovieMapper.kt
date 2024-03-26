@@ -1,8 +1,7 @@
-package com.app.moviesapp.utils
+package com.app.moviesapp.custom.mapper
 
 import com.app.moviesapp.custom.widget.MovieWidgetModel
 import com.app.moviesapp.data.response.MovieResponse
-import com.app.moviesapp.data.response.ReviewResultsItem
 
 
 fun MovieResponse.MovieWidgetModel() : MovieWidgetModel {

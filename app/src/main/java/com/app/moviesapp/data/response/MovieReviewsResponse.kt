@@ -11,19 +11,19 @@ data class MovieReviewsResponse(
     val page: Int? = null,
 
     @Json(name = "total_pages")
-    val totalPages: Int? = null,
+    val total_pages: Int? = null,
 
     @Json(name = "results")
     val results: List<ReviewResultsItem?>? = null,
 
     @Json(name = "total_results")
-    val totalResults: Int? = null
+    val total_results: Int? = null
 )
 
 data class AuthorDetails(
 
     @Json(name = "avatar_path")
-    val avatarPath: Any? = null,
+    val avatar_path: Any? = null,
 
     @Json(name = "name")
     val name: String? = null,
@@ -38,16 +38,16 @@ data class AuthorDetails(
 data class ReviewResultsItem(
 
     @Json(name = "author_details")
-    val authorDetails: AuthorDetails? = null,
+    val author_details: AuthorDetails? = null,
 
     @Json(name = "updated_at")
-    val updatedAt: String? = null,
+    val updated_at: String? = null,
 
     @Json(name = "author")
     val author: String? = null,
 
     @Json(name = "created_at")
-    val createdAt: String? = null,
+    val created_at: String? = null,
 
     @Json(name = "id")
     val id: String? = null,

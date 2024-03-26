@@ -16,5 +16,7 @@ fun MovieDetailsComponent(title: String, overview: String) {
             fontWeight = FontWeight.Bold
         )
         Text(text = overview, fontSize = 14.sp)
+
+
     }
 }

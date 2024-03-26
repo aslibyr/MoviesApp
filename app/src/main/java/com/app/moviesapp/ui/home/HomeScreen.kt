@@ -30,12 +30,12 @@ import coil.compose.AsyncImage
 import com.app.moviesapp.R
 import com.app.moviesapp.base.BasePagingResponse
 import com.app.moviesapp.custom.indicator.DotsIndicator
+import com.app.moviesapp.custom.mapper.MovieWidgetModel
 import com.app.moviesapp.custom.navigation.graphs.MovieListType
 import com.app.moviesapp.custom.widget.MovieWidget
 import com.app.moviesapp.custom.widget.MovieWidgetComponentModel
 import com.app.moviesapp.data.response.MovieResponse
 import com.app.moviesapp.utils.Constant
-import com.app.moviesapp.utils.MovieWidgetModel
 import com.app.moviesapp.utils.ResultWrapper
 import com.app.moviesapp.utils.ScreenRoutes
 

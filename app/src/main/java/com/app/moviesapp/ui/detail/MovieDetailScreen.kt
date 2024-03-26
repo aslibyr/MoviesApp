@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.app.moviesapp.custom.mapper.CastWidgetModel
 import com.app.moviesapp.custom.widget.CastWidget
 import com.app.moviesapp.custom.widget.CastWidgetComponentModel
 import com.app.moviesapp.custom.widget.MovieWidget
@@ -25,7 +26,6 @@ import com.app.moviesapp.custom.widget.MovieWidgetModel
 import com.app.moviesapp.data.response.MovieDetailResponse
 import com.app.moviesapp.ui.detail.components.MovieDetailPagerComponent
 import com.app.moviesapp.ui.detail.components.MovieDetailsComponent
-import com.app.moviesapp.utils.CastWidgetModel
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -65,7 +65,6 @@ fun DetailScreen(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MovieDetailUI(
     similar: List<MovieWidgetModel>,
