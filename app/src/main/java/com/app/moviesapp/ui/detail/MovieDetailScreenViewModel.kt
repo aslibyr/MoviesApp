@@ -8,13 +8,15 @@ import com.app.moviesapp.custom.widget.MovieWidgetModel
 import com.app.moviesapp.data.WebService
 import com.app.moviesapp.data.response.MovieCreditResponseItem
 import com.app.moviesapp.data.response.MovieDetailResponse
-import com.app.moviesapp.data.response.MovieReviewsResponse
+import com.app.moviesapp.ui.detail.screens.MovieReviewsUIModel
+import com.app.moviesapp.ui.detail.screens.toUIModel
 import com.app.moviesapp.utils.ResultWrapper
 import com.app.moviesapp.utils.safeApiCall
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,7 +30,9 @@ class ItemDetailScreenViewModel @Inject constructor(
     private val id = checkNotNull(savedStateHandle.get<String>("id"))
 
     private val _uiState = MutableStateFlow(MovieDetailUIStateModel())
-    val uiState = _uiState.asStateFlow()
+    val uiState = _uiState.stateIn(viewModelScope, SharingStarted.WhileSubscribed(),
+        MovieDetailUIStateModel()
+    )
 
 
     init {
@@ -213,7 +217,7 @@ class ItemDetailScreenViewModel @Inject constructor(
                 is ResultWrapper.Success -> {
                     _uiState.update {
                         it.copy(
-                            movieReviewsData = response.value,
+                            movieReviews = response.value.results.map { review -> review.toUIModel() },
                             isLoading = false,
                             successCount = _uiState.value.successCount.plus(1)
                         )
@@ -268,7 +272,7 @@ data class MovieDetailUIStateModel(
     val movieCastData: List<MovieCreditResponseItem> = emptyList(),
     val movieRecommendations: List<MovieWidgetModel> = emptyList(),
     val movieSimilar: List<MovieWidgetModel> = emptyList(),
-    val movieReviewsData: MovieReviewsResponse? = null,
+    val movieReviews: List<MovieReviewsUIModel> = emptyList(),
     val isLoading: Boolean = true,
     val errorMessage: String = "",
     val successCount: Int = 0

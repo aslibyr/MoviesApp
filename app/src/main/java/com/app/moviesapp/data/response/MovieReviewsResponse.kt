@@ -1,5 +1,6 @@
 package com.app.moviesapp.data.response
 
+import com.app.moviesapp.utils.Constant
 import com.squareup.moshi.Json
 
 data class MovieReviewsResponse(
@@ -14,7 +15,7 @@ data class MovieReviewsResponse(
     val total_pages: Int? = null,
 
     @Json(name = "results")
-    val results: List<ReviewResultsItem?>? = null,
+    val results: List<ReviewResultsItem> = emptyList(),
 
     @Json(name = "total_results")
     val total_results: Int? = null
@@ -23,17 +24,21 @@ data class MovieReviewsResponse(
 data class AuthorDetails(
 
     @Json(name = "avatar_path")
-    val avatar_path: Any? = null,
+    val avatar_path: String? = null,
 
     @Json(name = "name")
     val name: String? = null,
 
     @Json(name = "rating")
-    val rating: Int? = null,
+    val rating: Double? = null,
 
     @Json(name = "username")
     val username: String? = null
-)
+) {
+    fun getImagePath() : String {
+        return Constant.BASE_POSTER_URL + avatar_path
+    }
+}
 
 data class ReviewResultsItem(
 

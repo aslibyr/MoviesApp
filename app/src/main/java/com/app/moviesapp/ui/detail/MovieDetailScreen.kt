@@ -25,7 +25,9 @@ import com.app.moviesapp.custom.widget.MovieWidgetComponentModel
 import com.app.moviesapp.custom.widget.MovieWidgetModel
 import com.app.moviesapp.data.response.MovieDetailResponse
 import com.app.moviesapp.ui.detail.components.MovieDetailPagerComponent
+import com.app.moviesapp.ui.detail.components.MovieDetailReviewsComponent
 import com.app.moviesapp.ui.detail.components.MovieDetailsComponent
+import com.app.moviesapp.ui.detail.screens.MovieReviewsUIModel
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -56,7 +58,8 @@ fun DetailScreen(
                         "Cast Ekibi",
                         cast = uiState.movieCastData.map { it.CastWidgetModel() }),
                     similar = uiState.movieSimilar,
-                    recommendations = uiState.movieRecommendations
+                    recommendations = uiState.movieRecommendations,
+                    reviews = uiState.movieReviews
                 )
             }
         } else {
@@ -72,6 +75,7 @@ fun MovieDetailUI(
     movie: MovieDetailResponse,
     images: List<String>,
     castModel: CastWidgetComponentModel,
+    reviews : List<MovieReviewsUIModel>,
     onBackClick: () -> Unit
 ) {
     Column(
@@ -99,6 +103,7 @@ fun MovieDetailUI(
             ), openListScreen = { }) {
 
         }
+        MovieDetailReviewsComponent(reviews = reviews)
     }
 }
 
