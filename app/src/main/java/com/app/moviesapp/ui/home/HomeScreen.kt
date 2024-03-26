@@ -11,10 +11,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,7 +29,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.app.moviesapp.R
 import com.app.moviesapp.base.BasePagingResponse
-import com.app.moviesapp.custom.indicator.DotsIndicator
+import com.app.moviesapp.custom.indicator.PagerIndicator
 import com.app.moviesapp.custom.mapper.MovieWidgetModel
 import com.app.moviesapp.custom.navigation.graphs.MovieListType
 import com.app.moviesapp.custom.widget.MovieWidget
@@ -84,7 +84,7 @@ fun HomeScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(450.dp)
+                        .height(500.dp)
                 ) {
                     HorizontalPager(
                         state = pagerState,
@@ -108,14 +108,17 @@ fun HomeScreen(
                             contentScale = ContentScale.Crop
                         )
                     }
-                    DotsIndicator(
-                        totalDots = response.results.take(10).size,
-                        selectedIndex = pagerState.currentPage,
+                    Box(
                         modifier = Modifier
-                            .wrapContentSize()
                             .align(Alignment.BottomCenter)
-                            .padding(bottom = 16.dp)
-                    )
+                            .padding(bottom = 12.dp)
+                    ) {
+                        PagerIndicator(
+                            pagerState = pagerState, indicatorSize = 8.dp,
+                            indicatorCount = 7,
+                            indicatorShape = CircleShape
+                        )
+                    }
                 }
 
 
