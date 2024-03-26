@@ -1,6 +1,5 @@
 package com.app.moviesapp.ui.detail
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,14 +22,13 @@ import com.app.moviesapp.custom.widget.CastWidgetComponentModel
 import com.app.moviesapp.custom.widget.MovieWidget
 import com.app.moviesapp.custom.widget.MovieWidgetComponentModel
 import com.app.moviesapp.custom.widget.MovieWidgetModel
-import com.app.moviesapp.data.response.MovieDetailResponse
 import com.app.moviesapp.ui.detail.components.MovieDetailPagerComponent
 import com.app.moviesapp.ui.detail.components.MovieDetailReviewsComponent
 import com.app.moviesapp.ui.detail.components.MovieDetailsComponent
-import com.app.moviesapp.ui.detail.screens.MovieReviewsUIModel
+import com.app.moviesapp.ui.detail.ui_models.MovieDetailUIModel
+import com.app.moviesapp.ui.detail.ui_models.MovieReviewsUIModel
 
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DetailScreen(
     viewModel: ItemDetailScreenViewModel = hiltViewModel(), onBackClick: () -> Unit
@@ -49,19 +47,18 @@ fun DetailScreen(
             .verticalScroll(rememberScrollState())
     ) {
         if (uiState.successCount >= 6) {
-            uiState.movieDetailData?.let { movie ->
-                MovieDetailUI(
-                    movie = movie,
-                    images = uiState.images,
-                    onBackClick = onBackClick,
-                    castModel = CastWidgetComponentModel(
-                        "Cast Ekibi",
-                        cast = uiState.movieCastData.map { it.CastWidgetModel() }),
-                    similar = uiState.movieSimilar,
-                    recommendations = uiState.movieRecommendations,
-                    reviews = uiState.movieReviews
-                )
-            }
+            MovieDetailUI(
+                movie = uiState.movieDetailData,
+                images = uiState.images,
+                onBackClick = onBackClick,
+                castModel = CastWidgetComponentModel(
+                    "Cast Ekibi",
+                    cast = uiState.movieCastData.map { it.CastWidgetModel() }),
+                similar = uiState.movieSimilar,
+                recommendations = uiState.movieRecommendations,
+                reviews = uiState.movieReviews
+            )
+
         } else {
             Text(text = "error")
         }
@@ -72,10 +69,10 @@ fun DetailScreen(
 fun MovieDetailUI(
     similar: List<MovieWidgetModel>,
     recommendations: List<MovieWidgetModel>,
-    movie: MovieDetailResponse,
+    movie: MovieDetailUIModel,
     images: List<String>,
     castModel: CastWidgetComponentModel,
-    reviews : List<MovieReviewsUIModel>,
+    reviews: List<MovieReviewsUIModel>,
     onBackClick: () -> Unit
 ) {
     Column(

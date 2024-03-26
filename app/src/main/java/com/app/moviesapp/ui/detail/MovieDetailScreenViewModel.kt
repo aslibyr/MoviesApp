@@ -7,9 +7,9 @@ import com.app.moviesapp.custom.mapper.MovieWidgetModel
 import com.app.moviesapp.custom.widget.MovieWidgetModel
 import com.app.moviesapp.data.WebService
 import com.app.moviesapp.data.response.MovieCreditResponseItem
-import com.app.moviesapp.data.response.MovieDetailResponse
-import com.app.moviesapp.ui.detail.screens.MovieReviewsUIModel
-import com.app.moviesapp.ui.detail.screens.toUIModel
+import com.app.moviesapp.ui.detail.ui_models.MovieDetailUIModel
+import com.app.moviesapp.ui.detail.ui_models.MovieReviewsUIModel
+import com.app.moviesapp.ui.detail.ui_models.toUIModel
 import com.app.moviesapp.utils.ResultWrapper
 import com.app.moviesapp.utils.safeApiCall
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -53,7 +53,7 @@ class ItemDetailScreenViewModel @Inject constructor(
                 is ResultWrapper.Success -> {
                     _uiState.update {
                         it.copy(
-                            movieDetailData = response.value,
+                            movieDetailData = response.value.toUIModel(),
                             isLoading = false,
                             successCount = _uiState.value.successCount.plus(1)
                         )
@@ -268,7 +268,7 @@ class ItemDetailScreenViewModel @Inject constructor(
 
 data class MovieDetailUIStateModel(
     val images: List<String> = emptyList(),
-    val movieDetailData: MovieDetailResponse? = null,
+    val movieDetailData: MovieDetailUIModel = MovieDetailUIModel(),
     val movieCastData: List<MovieCreditResponseItem> = emptyList(),
     val movieRecommendations: List<MovieWidgetModel> = emptyList(),
     val movieSimilar: List<MovieWidgetModel> = emptyList(),

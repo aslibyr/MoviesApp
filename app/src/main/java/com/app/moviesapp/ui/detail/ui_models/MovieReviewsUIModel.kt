@@ -1,4 +1,4 @@
-package com.app.moviesapp.ui.detail.screens
+package com.app.moviesapp.ui.detail.ui_models
 
 import com.app.moviesapp.data.response.ReviewResultsItem
 
