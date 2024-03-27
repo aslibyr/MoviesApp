@@ -21,11 +21,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.app.moviesapp.data.response.MovieCreditResponse
 
 @Composable
 fun CastWidget(
@@ -33,7 +32,12 @@ fun CastWidget(
     openCastListScreen: () -> Unit,
 ) {
 
-    Column(modifier = Modifier.fillMaxWidth().wrapContentHeight(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -51,9 +55,8 @@ fun CastWidget(
             )
         }
         LazyRow(Modifier.fillMaxWidth(), contentPadding = PaddingValues(start = 16.dp)) {
-            items(model.cast) { cast ->
-                CastWidgetItem(cast =cast) {
-
+            items(model.cast.take(8)) { cast ->
+                CastWidgetItem(cast = cast) {
                 }
             }
         }
@@ -67,8 +70,7 @@ fun CastWidgetItem(
 ) {
     Column(
         modifier = Modifier
-            .padding(8.dp)
-            .clip(RoundedCornerShape(topEnd = 20.dp, topStart = 20.dp)),
+            .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
@@ -79,14 +81,19 @@ fun CastWidgetItem(
             shape = RoundedCornerShape(15.dp),
             colors = CardDefaults.cardColors(containerColor = Color.White)
         ) {
-            AsyncImage(model = cast.profilePath, contentDescription = "")
+            AsyncImage(
+                modifier = Modifier.size(150.dp),
+                model = cast.profilePath,
+                contentDescription = "",
+                contentScale = ContentScale.Crop
+            )
             Text(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(start = 8.dp),
                 text = cast.castName,
                 style = MaterialTheme.typography.bodyMedium
             )
             Text(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier.padding(start = 8.dp),
                 text = cast.character,
                 style = MaterialTheme.typography.bodyMedium
             )

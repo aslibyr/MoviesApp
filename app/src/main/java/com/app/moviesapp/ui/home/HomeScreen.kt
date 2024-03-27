@@ -68,9 +68,7 @@ fun HomeScreen(
             }
 
             ResultWrapper.Loading -> {}
-            ResultWrapper.NetworkError -> {
-
-            }
+            ResultWrapper.NetworkError -> {}
 
             is ResultWrapper.Success -> {
                 val response =

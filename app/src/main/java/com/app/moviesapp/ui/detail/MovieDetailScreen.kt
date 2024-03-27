@@ -82,23 +82,25 @@ fun MovieDetailUI(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         MovieDetailPagerComponent(images = images, onBackClick = onBackClick)
-        MovieDetailsComponent(title = movie.title ?: "", overview = movie.overview ?: "")
+        MovieDetailsComponent(title = movie.title, overview = movie.overview)
         CastWidget(model = castModel) {
 
         }
-        MovieWidget(
-            model = MovieWidgetComponentModel(
-                widgetCategory = "Recommendations",
-                movies = recommendations
-            ), openListScreen = { }) {
-
+        if (recommendations.isNotEmpty()) {
+            MovieWidget(
+                model = MovieWidgetComponentModel(
+                    widgetCategory = "Recommendations",
+                    movies = recommendations
+                ), openListScreen = { }) {
+            }
         }
-        MovieWidget(
-            model = MovieWidgetComponentModel(
-                widgetCategory = "Similar",
-                movies = similar
-            ), openListScreen = { }) {
-
+        if (similar.isNotEmpty()) {
+            MovieWidget(
+                model = MovieWidgetComponentModel(
+                    widgetCategory = "Similar",
+                    movies = similar
+                ), openListScreen = { }) {
+            }
         }
         MovieDetailReviewsComponent(reviews = reviews)
     }
