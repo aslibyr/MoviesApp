@@ -22,7 +22,8 @@ class MovieListScreenViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val webService: WebService
 ) : ViewModel() {
-    val type = checkNotNull(savedStateHandle.get<String>("type"))
+    private val type = checkNotNull(savedStateHandle.get<String>("type"))
+    private val movieId = checkNotNull(savedStateHandle.get<String>("movie_id"))
 
     private val _movies = MutableStateFlow<PagingData<MovieResponse>>(PagingData.empty())
     val movies: StateFlow<PagingData<MovieResponse>>
@@ -63,6 +64,20 @@ class MovieListScreenViewModel @Inject constructor(
                 MovieListType.POPULAR.type -> {
                     Pager(PagingConfig(pageSize = 20)) {
                         MoviePagingSource(webService, MovieListType.POPULAR)
+                    }.flow.cachedIn(viewModelScope).collect {
+                        _movies.emit(it)
+                    }
+                }
+                MovieListType.SIMILAR.type -> {
+                    Pager(PagingConfig(pageSize = 20)) {
+                        MoviePagingSource(webService, MovieListType.SIMILAR, movieId = movieId)
+                    }.flow.cachedIn(viewModelScope).collect {
+                        _movies.emit(it)
+                    }
+                }
+                MovieListType.RECOMMENDATIONS.type -> {
+                    Pager(PagingConfig(pageSize = 20)) {
+                        MoviePagingSource(webService, MovieListType.RECOMMENDATIONS,movieId = movieId)
                     }.flow.cachedIn(viewModelScope).collect {
                         _movies.emit(it)
                     }

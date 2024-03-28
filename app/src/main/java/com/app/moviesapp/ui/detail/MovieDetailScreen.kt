@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.app.moviesapp.custom.mapper.CastWidgetModel
+import com.app.moviesapp.custom.navigation.graphs.MovieListType
 import com.app.moviesapp.custom.widget.CastWidget
 import com.app.moviesapp.custom.widget.CastWidgetComponentModel
 import com.app.moviesapp.custom.widget.MovieWidget
@@ -25,11 +26,15 @@ import com.app.moviesapp.ui.detail.components.MovieDetailReviewsComponent
 import com.app.moviesapp.ui.detail.components.MovieDetailsComponent
 import com.app.moviesapp.ui.detail.ui_models.MovieDetailUIModel
 import com.app.moviesapp.ui.detail.ui_models.MovieReviewsUIModel
+import com.app.moviesapp.utils.Constant
+import com.app.moviesapp.utils.ScreenRoutes
 
 
 @Composable
 fun DetailScreen(
-    viewModel: ItemDetailScreenViewModel = hiltViewModel(), onBackClick: () -> Unit
+    viewModel: ItemDetailScreenViewModel = hiltViewModel(), onBackClick: () -> Unit,
+    openMovieListScreen: (String) -> Unit,
+    openMovieDetail: (String) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -53,7 +58,9 @@ fun DetailScreen(
                     cast = uiState.movieCastData.map { it.CastWidgetModel() }),
                 similar = uiState.movieSimilar,
                 recommendations = uiState.movieRecommendations,
-                reviews = uiState.movieReviews
+                reviews = uiState.movieReviews,
+                openMovieListScreen = openMovieListScreen,
+                openMovieDetail = openMovieDetail
             )
 
         }
@@ -68,7 +75,9 @@ fun MovieDetailUI(
     images: List<String>,
     castModel: CastWidgetComponentModel,
     reviews: List<MovieReviewsUIModel>,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    openMovieListScreen: (String) -> Unit,
+    openMovieDetail: (String) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -85,16 +94,39 @@ fun MovieDetailUI(
                 model = MovieWidgetComponentModel(
                     widgetCategory = "Recommendations",
                     movies = recommendations
-                ), openListScreen = { }) {
-            }
+                ), openListScreen = {
+                    val route = ScreenRoutes.HOME_LIST_ROUTE.replace(
+                        oldValue = Constant.TYPE,
+                        newValue = MovieListType.RECOMMENDATIONS.type
+                    ).replace(
+                        oldValue = "{movie_id}",
+                        newValue = movie.movieId
+                    )
+                    openMovieListScreen(route)
+                },
+                onMovieClick = { route ->
+                    openMovieDetail(route)
+                })
         }
         if (similar.isNotEmpty()) {
             MovieWidget(
                 model = MovieWidgetComponentModel(
                     widgetCategory = "Similar",
                     movies = similar
-                ), openListScreen = { }) {
-            }
+                ), openListScreen = {
+                    val route = ScreenRoutes.HOME_LIST_ROUTE.replace(
+                        oldValue = Constant.TYPE,
+                        newValue = MovieListType.SIMILAR.type
+                    ).replace(
+                        oldValue = "{movie_id}",
+                        newValue = movie.movieId
+                    )
+                    openMovieListScreen(route)
+                },
+                onMovieClick = { route ->
+
+                    openMovieDetail(route)
+                })
         }
         MovieDetailReviewsComponent(reviews = reviews)
     }

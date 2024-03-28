@@ -75,12 +75,11 @@ fun MovieWidgetItem(movie: MovieWidgetModel, onMovieClick: (String) -> Unit) {
         modifier = Modifier
             .padding(8.dp)
             .clickable {
-                onMovieClick(
-                    ScreenRoutes.MOVIE_DETAIL_ROUTE.replace(
-                        oldValue = Constant.ID,
-                        newValue = movie.movieId
-                    )
+                val route = ScreenRoutes.MOVIE_DETAIL_ROUTE.replace(
+                    oldValue = Constant.ID,
+                    newValue = movie.movieId
                 )
+                onMovieClick(route)
             },
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)

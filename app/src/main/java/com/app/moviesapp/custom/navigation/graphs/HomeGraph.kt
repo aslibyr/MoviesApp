@@ -13,7 +13,6 @@ import com.app.moviesapp.ui.home.HomeScreen
 import com.app.moviesapp.ui.movie_list.MovieListScreen
 import com.app.moviesapp.utils.ScreenRoutes
 
-@RequiresApi(Build.VERSION_CODES.S)
 fun NavGraphBuilder.homeGraph(
     navController: NavController,
     shouldBottomBarVisible: (Boolean) -> Unit
@@ -39,7 +38,10 @@ fun NavGraphBuilder.homeGraph(
             arguments = listOf(
                 navArgument("type") {
                     type = NavType.StringType
-                }
+                },
+                navArgument("movie_id") {
+                    defaultValue = "movie"
+                },
             )
         ) {
             MovieListScreen(onMovieClick = { route ->
@@ -54,7 +56,13 @@ fun NavGraphBuilder.homeGraph(
                 }
             )
         ) {
-            DetailScreen(onBackClick = { navController.popBackStack() })
+            DetailScreen(onBackClick = { navController.popBackStack() },
+                openMovieListScreen = { route ->
+                    navController.navigate(route)
+                },
+                openMovieDetail = { route ->
+                    navController.navigate(route)
+                })
         }
     }
 }
@@ -63,5 +71,7 @@ enum class MovieListType(val type: String) {
     UPCOMING("upcoming"),
     POPULAR("popular"),
     TOP_RATED("top_rated"),
-    NOW_PLAYING("now_playing")
+    NOW_PLAYING("now_playing"),
+    SIMILAR("similar"),
+    RECOMMENDATIONS("recommendations")
 }

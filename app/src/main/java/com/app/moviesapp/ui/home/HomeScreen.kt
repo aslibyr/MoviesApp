@@ -39,7 +39,6 @@ import com.app.moviesapp.utils.Constant
 import com.app.moviesapp.utils.ResultWrapper
 import com.app.moviesapp.utils.ScreenRoutes
 
-@RequiresApi(Build.VERSION_CODES.S)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(

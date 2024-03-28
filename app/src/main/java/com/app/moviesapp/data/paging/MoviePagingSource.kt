@@ -11,7 +11,7 @@ import retrofit2.HttpException
 class MoviePagingSource(
     private val api: WebService,
     private val movieType: MovieListType,
-    private val query: String = "",
+    private val movieId: String = "",
 ) : PagingSource<Int, MovieResponse>() {
     override fun getRefreshKey(state: PagingState<Int, MovieResponse>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -41,6 +41,12 @@ class MoviePagingSource(
                     api.getNowPLaying(page)
                 }
 
+                MovieListType.SIMILAR -> {
+                    api.getSimilar(id = movieId, page = page)
+                }
+                MovieListType.RECOMMENDATIONS -> {
+                    api.getRecommendations(movieId,page)
+                }
             }
 
             LoadResult.Page(
