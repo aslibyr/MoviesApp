@@ -1,8 +1,6 @@
 package com.app.moviesapp.ui.home
 
-import android.os.Build
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -30,7 +28,7 @@ import coil.compose.AsyncImage
 import com.app.moviesapp.R
 import com.app.moviesapp.base.BasePagingResponse
 import com.app.moviesapp.custom.indicator.PagerIndicator
-import com.app.moviesapp.custom.mapper.MovieWidgetModel
+import com.app.moviesapp.data.mapper.MovieWidgetModel
 import com.app.moviesapp.custom.navigation.graphs.MovieListType
 import com.app.moviesapp.custom.widget.MovieWidget
 import com.app.moviesapp.custom.widget.MovieWidgetComponentModel

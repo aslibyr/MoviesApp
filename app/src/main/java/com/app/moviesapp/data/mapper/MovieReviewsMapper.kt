@@ -1,14 +1,7 @@
-package com.app.moviesapp.ui.detail.ui_models
+package com.app.moviesapp.data.mapper
 
 import com.app.moviesapp.data.response.ReviewResultsItem
-
-data class MovieReviewsUIModel(
-    val author : String = "",
-    val review : String = "",
-    val authorImage : String = "",
-    val date : String = "",
-    val rating : String = ""
-)
+import com.app.moviesapp.data.ui_models.MovieReviewsUIModel
 
 fun ReviewResultsItem.toUIModel() : MovieReviewsUIModel {
     return MovieReviewsUIModel(
@@ -19,5 +12,3 @@ fun ReviewResultsItem.toUIModel() : MovieReviewsUIModel {
         rating = this.author_details?.rating.toString()
     )
 }
-
-

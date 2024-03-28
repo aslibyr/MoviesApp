@@ -10,9 +10,9 @@ data class MovieCreditResponse(
 	val id: Int? = null,
 
 	@Json(name="cast")
-	val cast: List<MovieCreditResponseItem>? = null,
+	val cast: List<MovieCreditResponseItem> = emptyList(),
 
-)
+	)
 
 @Parcelize
 data class MovieCreditResponseItem(

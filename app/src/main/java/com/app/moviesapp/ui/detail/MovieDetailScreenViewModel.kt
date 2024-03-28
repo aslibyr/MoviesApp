@@ -3,15 +3,14 @@ package com.app.moviesapp.ui.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.moviesapp.custom.mapper.CastWidgetModel
-import com.app.moviesapp.custom.mapper.MovieWidgetModel
+import com.app.moviesapp.data.mapper.CastWidgetModel
+import com.app.moviesapp.data.mapper.MovieWidgetModel
 import com.app.moviesapp.custom.widget.CastWidgetModel
 import com.app.moviesapp.custom.widget.MovieWidgetModel
 import com.app.moviesapp.data.WebService
-import com.app.moviesapp.data.response.MovieCreditResponseItem
-import com.app.moviesapp.ui.detail.ui_models.MovieDetailUIModel
-import com.app.moviesapp.ui.detail.ui_models.MovieReviewsUIModel
-import com.app.moviesapp.ui.detail.ui_models.toUIModel
+import com.app.moviesapp.data.mapper.toUIModel
+import com.app.moviesapp.data.ui_models.MovieDetailUIModel
+import com.app.moviesapp.data.ui_models.MovieReviewsUIModel
 import com.app.moviesapp.utils.ResultWrapper
 import com.app.moviesapp.utils.safeApiCall
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -286,14 +285,3 @@ class ItemDetailScreenViewModel @Inject constructor(
     }
 }
 
-data class MovieDetailUIStateModel(
-    val images: List<String> = emptyList(),
-    val movieDetailData: MovieDetailUIModel = MovieDetailUIModel(),
-    val movieCastData: List<CastWidgetModel> = emptyList(),
-    val movieRecommendations: List<MovieWidgetModel> = emptyList(),
-    val movieSimilar: List<MovieWidgetModel> = emptyList(),
-    val movieReviews: List<MovieReviewsUIModel> = emptyList(),
-    val isLoading: Boolean = true,
-    val errorMessage: String = "",
-    val successCount: Int = 0
-)

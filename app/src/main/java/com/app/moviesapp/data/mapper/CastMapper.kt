@@ -1,4 +1,4 @@
-package com.app.moviesapp.custom.mapper
+package com.app.moviesapp.data.mapper
 
 import com.app.moviesapp.custom.widget.CastWidgetModel
 import com.app.moviesapp.data.response.MovieCreditResponseItem

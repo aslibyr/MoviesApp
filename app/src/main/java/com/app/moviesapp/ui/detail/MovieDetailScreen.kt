@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.app.moviesapp.custom.mapper.CastWidgetModel
 import com.app.moviesapp.custom.navigation.graphs.MovieListType
 import com.app.moviesapp.custom.widget.CastWidget
 import com.app.moviesapp.custom.widget.CastWidgetComponentModel
@@ -24,8 +23,8 @@ import com.app.moviesapp.custom.widget.MovieWidgetModel
 import com.app.moviesapp.ui.detail.components.MovieDetailPagerComponent
 import com.app.moviesapp.ui.detail.components.MovieDetailReviewsComponent
 import com.app.moviesapp.ui.detail.components.MovieDetailsComponent
-import com.app.moviesapp.ui.detail.ui_models.MovieDetailUIModel
-import com.app.moviesapp.ui.detail.ui_models.MovieReviewsUIModel
+import com.app.moviesapp.data.ui_models.MovieDetailUIModel
+import com.app.moviesapp.data.ui_models.MovieReviewsUIModel
 import com.app.moviesapp.utils.Constant
 import com.app.moviesapp.utils.ScreenRoutes
 
