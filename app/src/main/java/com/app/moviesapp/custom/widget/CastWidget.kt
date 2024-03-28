@@ -56,7 +56,7 @@ fun CastWidget(
             )
         }
         LazyRow(Modifier.fillMaxWidth(), contentPadding = PaddingValues(start = 16.dp)) {
-            items(model.cast.take(8)) { cast ->
+            items(model.cast) { cast ->
                 CastWidgetItem(cast = cast) {
                 }
             }

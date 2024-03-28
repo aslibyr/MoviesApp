@@ -55,7 +55,7 @@ fun DetailScreen(
                 onBackClick = onBackClick,
                 castModel = CastWidgetComponentModel(
                     "Cast Ekibi",
-                    cast = uiState.movieCastData.map { it.CastWidgetModel() }),
+                    cast = uiState.movieCastData),
                 similar = uiState.movieSimilar,
                 recommendations = uiState.movieRecommendations,
                 reviews = uiState.movieReviews,

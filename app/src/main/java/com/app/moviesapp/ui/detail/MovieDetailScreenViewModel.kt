@@ -3,7 +3,9 @@ package com.app.moviesapp.ui.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.app.moviesapp.custom.mapper.CastWidgetModel
 import com.app.moviesapp.custom.mapper.MovieWidgetModel
+import com.app.moviesapp.custom.widget.CastWidgetModel
 import com.app.moviesapp.custom.widget.MovieWidgetModel
 import com.app.moviesapp.data.WebService
 import com.app.moviesapp.data.response.MovieCreditResponseItem
@@ -93,7 +95,7 @@ class ItemDetailScreenViewModel @Inject constructor(
                     response.value.cast?.let { castList ->
                         _uiState.update {
                             it.copy(
-                                movieCastData = castList,
+                                movieCastData = castList.take(5).map { it.CastWidgetModel() },
                                 successCount = _uiState.value.successCount.plus(1),
                                 isLoading = false,
                             )
@@ -287,7 +289,7 @@ class ItemDetailScreenViewModel @Inject constructor(
 data class MovieDetailUIStateModel(
     val images: List<String> = emptyList(),
     val movieDetailData: MovieDetailUIModel = MovieDetailUIModel(),
-    val movieCastData: List<MovieCreditResponseItem> = emptyList(),
+    val movieCastData: List<CastWidgetModel> = emptyList(),
     val movieRecommendations: List<MovieWidgetModel> = emptyList(),
     val movieSimilar: List<MovieWidgetModel> = emptyList(),
     val movieReviews: List<MovieReviewsUIModel> = emptyList(),
