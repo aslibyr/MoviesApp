@@ -21,7 +21,7 @@ fun MainNavigation(
     NavHost(
         navController = navController,
         startDestination = ScreenRoutes.HOME_HOST_ROUTE,
-        modifier = Modifier,
+        modifier = modifier,
 
         ) {
         homeGraph(navController, shouldBottomBarVisible = {})
