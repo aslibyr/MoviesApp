@@ -47,7 +47,7 @@ fun CastWidget(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "Tümünü gör", style = MaterialTheme.typography.bodyMedium
+                text = "Cast", style = MaterialTheme.typography.bodyMedium
             )
             Icon(
                 imageVector = Icons.Filled.ArrowForwardIos,

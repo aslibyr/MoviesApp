@@ -68,7 +68,9 @@ fun HomeScreen(
             }
 
             ResultWrapper.Loading -> {}
-            ResultWrapper.NetworkError -> {}
+            ResultWrapper.NetworkError -> {
+                Toast.makeText(context, "Network error", Toast.LENGTH_LONG).show()
+            }
 
             is ResultWrapper.Success -> {
                 val response =

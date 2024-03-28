@@ -62,7 +62,7 @@ class ItemDetailScreenViewModel @Inject constructor(
 
                 is ResultWrapper.GenericError -> {
                     _uiState.update {
-                        it.copy(errorMessage = response.error.toString())
+                        it.copy(errorMessage = response.error.toString(), isLoading = false)
                     }
                 }
 
@@ -74,7 +74,10 @@ class ItemDetailScreenViewModel @Inject constructor(
 
                 ResultWrapper.NetworkError -> {
                     _uiState.update {
-                        it.copy(errorMessage = "İnternet bağlantınızı kontrol edin.")
+                        it.copy(
+                            errorMessage = "İnternet bağlantınızı kontrol edin.",
+                            isLoading = false
+                        )
                     }
                 }
             }
@@ -100,7 +103,7 @@ class ItemDetailScreenViewModel @Inject constructor(
 
                 is ResultWrapper.GenericError -> {
                     _uiState.update {
-                        it.copy(errorMessage = response.error.toString())
+                        it.copy(errorMessage = response.error.toString(), isLoading = false)
                     }
                 }
 
@@ -112,7 +115,10 @@ class ItemDetailScreenViewModel @Inject constructor(
 
                 ResultWrapper.NetworkError -> {
                     _uiState.update {
-                        it.copy(errorMessage = "İnternet bağlantınızı kontrol edin.")
+                        it.copy(
+                            errorMessage = "İnternet bağlantınızı kontrol edin.",
+                            isLoading = false
+                        )
                     }
                 }
             }
@@ -126,7 +132,7 @@ class ItemDetailScreenViewModel @Inject constructor(
             }) {
                 is ResultWrapper.GenericError -> {
                     _uiState.update {
-                        it.copy(errorMessage = response.error.toString())
+                        it.copy(errorMessage = response.error.toString(), isLoading = false)
                     }
                 }
 
@@ -138,7 +144,10 @@ class ItemDetailScreenViewModel @Inject constructor(
 
                 ResultWrapper.NetworkError -> {
                     _uiState.update {
-                        it.copy(errorMessage = "İnternet bağlantınızı kontrol edin.")
+                        it.copy(
+                            errorMessage = "İnternet bağlantınızı kontrol edin.",
+                            isLoading = false
+                        )
                     }
                 }
 
@@ -162,7 +171,7 @@ class ItemDetailScreenViewModel @Inject constructor(
             }) {
                 is ResultWrapper.GenericError -> {
                     _uiState.update {
-                        it.copy(errorMessage = response.error.toString())
+                        it.copy(errorMessage = response.error.toString(), isLoading = false)
                     }
                 }
 
@@ -174,7 +183,10 @@ class ItemDetailScreenViewModel @Inject constructor(
 
                 ResultWrapper.NetworkError -> {
                     _uiState.update {
-                        it.copy(errorMessage = "İnternet bağlantınızı kontrol edin.")
+                        it.copy(
+                            errorMessage = "İnternet bağlantınızı kontrol edin.",
+                            isLoading = false
+                        )
                     }
                 }
 
@@ -198,7 +210,7 @@ class ItemDetailScreenViewModel @Inject constructor(
             }) {
                 is ResultWrapper.GenericError -> {
                     _uiState.update {
-                        it.copy(errorMessage = response.error.toString())
+                        it.copy(errorMessage = response.error.toString(), isLoading = false)
                     }
                 }
 
@@ -210,7 +222,10 @@ class ItemDetailScreenViewModel @Inject constructor(
 
                 ResultWrapper.NetworkError -> {
                     _uiState.update {
-                        it.copy(errorMessage = "İnternet bağlantınızı kontrol edin.")
+                        it.copy(
+                            errorMessage = "İnternet bağlantınızı kontrol edin.",
+                            isLoading = false
+                        )
                     }
                 }
 
@@ -234,7 +249,7 @@ class ItemDetailScreenViewModel @Inject constructor(
             }) {
                 is ResultWrapper.GenericError -> {
                     _uiState.update {
-                        it.copy(errorMessage = response.error.toString())
+                        it.copy(errorMessage = response.error.toString(), isLoading = false)
                     }
                 }
 
@@ -246,7 +261,10 @@ class ItemDetailScreenViewModel @Inject constructor(
 
                 ResultWrapper.NetworkError -> {
                     _uiState.update {
-                        it.copy(errorMessage = "İnternet bağlantınızı kontrol edin.")
+                        it.copy(
+                            errorMessage = "İnternet bağlantınızı kontrol edin.",
+                            isLoading = false
+                        )
                     }
                 }
 

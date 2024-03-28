@@ -69,7 +69,9 @@ fun MovieReviewItem(
         }
 
         Text(
-            modifier = Modifier.padding(horizontal = 6.dp),
+            modifier = Modifier
+                .padding(horizontal = 6.dp)
+                .padding(bottom = 6.dp),
             text = review.review,
             maxLines = if (isExpanded) Int.MAX_VALUE else 3,
             overflow = TextOverflow.Ellipsis
