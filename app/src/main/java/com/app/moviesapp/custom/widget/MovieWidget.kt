@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,8 +23,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.app.moviesapp.utils.Constant
@@ -31,11 +34,15 @@ import com.app.moviesapp.utils.ScreenRoutes
 @Composable
 fun MovieWidget(
     model: MovieWidgetComponentModel,
-    openListScreen : () -> Unit,
+    openListScreen: () -> Unit,
     onMovieClick: (String) -> Unit
 ) {
 
-    Column(modifier = Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 6.dp), verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -66,7 +73,6 @@ fun MovieWidgetItem(movie: MovieWidgetModel, onMovieClick: (String) -> Unit) {
     Column(
         modifier = Modifier
             .padding(8.dp)
-            .clip(RoundedCornerShape(topEnd = 20.dp, topStart = 20.dp))
             .clickable {
                 onMovieClick(
                     ScreenRoutes.MOVIE_DETAIL_ROUTE.replace(
@@ -80,16 +86,26 @@ fun MovieWidgetItem(movie: MovieWidgetModel, onMovieClick: (String) -> Unit) {
     ) {
         Card(
             modifier = Modifier
-                .padding(8.dp),
+                .padding(8.dp)
+                .width(180.dp),
             elevation = CardDefaults.cardElevation(5.dp),
             shape = RoundedCornerShape(15.dp),
             colors = CardDefaults.cardColors(containerColor = Color.White)
         ) {
-            AsyncImage(model = movie.movieImage, contentDescription = "")
+            AsyncImage(
+                modifier = Modifier
+                    .height(250.dp)
+                    .width(180.dp),
+                model = movie.movieImage,
+                contentDescription = "",
+                contentScale = ContentScale.Crop
+            )
             Text(
                 modifier = Modifier.padding(8.dp),
                 text = movie.movieName,
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyMedium,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }

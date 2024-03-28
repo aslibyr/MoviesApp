@@ -53,16 +53,23 @@ fun MovieReviewItem(
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(6.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = review.author, fontWeight = FontWeight.Medium)
+            Text(
+                text = review.author,
+                color = Color.White,
+                fontWeight = FontWeight.Medium
+            )
+
             if (!review.rating.contains("null")) {
                 Text(text = review.rating)
             }
         }
 
         Text(
+            modifier = Modifier.padding(horizontal = 6.dp),
             text = review.review,
             maxLines = if (isExpanded) Int.MAX_VALUE else 3,
             overflow = TextOverflow.Ellipsis
@@ -70,7 +77,9 @@ fun MovieReviewItem(
         if (!isExpanded) {
             Text(
                 text = "Daha fazla göster",
-                modifier = Modifier.clickable { isExpanded = true },
+                modifier = Modifier
+                    .padding(6.dp)
+                    .clickable { isExpanded = true },
                 color = Color.White,
                 fontWeight = FontWeight.Medium
             )

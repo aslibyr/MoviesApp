@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 
 @Composable
@@ -69,8 +70,6 @@ fun CastWidgetItem(
     cast: CastWidgetModel, onCastClick: (String) -> Unit
 ) {
     Column(
-        modifier = Modifier
-            .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
@@ -88,13 +87,15 @@ fun CastWidgetItem(
                 contentScale = ContentScale.Crop
             )
             Text(
-                modifier = Modifier.padding(start = 8.dp),
+                modifier = Modifier.padding(start = 8.dp, bottom = 4.dp, top = 4.dp),
                 text = cast.castName,
+                fontSize = 12.sp,
                 style = MaterialTheme.typography.bodyMedium
             )
             Text(
-                modifier = Modifier.padding(start = 8.dp),
+                modifier = Modifier.padding(start = 8.dp, bottom = 4.dp),
                 text = cast.character,
+                fontSize = 10.sp,
                 style = MaterialTheme.typography.bodyMedium
             )
         }

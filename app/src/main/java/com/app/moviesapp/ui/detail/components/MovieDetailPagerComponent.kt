@@ -65,5 +65,4 @@ fun MovieDetailPagerComponent(images: List<String>, onBackClick: () -> Unit) {
                 .shadow(50.dp),
             tint = Color.White)
     }
-
 }
