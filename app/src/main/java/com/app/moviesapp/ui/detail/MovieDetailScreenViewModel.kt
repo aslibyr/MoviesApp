@@ -3,14 +3,10 @@ package com.app.moviesapp.ui.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.app.moviesapp.data.WebService
 import com.app.moviesapp.data.mapper.CastWidgetModel
 import com.app.moviesapp.data.mapper.MovieWidgetModel
-import com.app.moviesapp.custom.widget.CastWidgetModel
-import com.app.moviesapp.custom.widget.MovieWidgetModel
-import com.app.moviesapp.data.WebService
 import com.app.moviesapp.data.mapper.toUIModel
-import com.app.moviesapp.data.ui_models.MovieDetailUIModel
-import com.app.moviesapp.data.ui_models.MovieReviewsUIModel
 import com.app.moviesapp.utils.ResultWrapper
 import com.app.moviesapp.utils.safeApiCall
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -91,9 +87,9 @@ class ItemDetailScreenViewModel @Inject constructor(
                 webService.getMovieCredits(id)
             }) {
                 is ResultWrapper.Success -> {
-                    response.value.cast?.let { castList ->
-                        _uiState.update {
-                            it.copy(
+                    response.value.cast.let { castList ->
+                        _uiState.update { movieDetailUIStateModel ->
+                            movieDetailUIStateModel.copy(
                                 movieCastData = castList.take(5).map { it.CastWidgetModel() },
                                 successCount = _uiState.value.successCount.plus(1),
                                 isLoading = false,

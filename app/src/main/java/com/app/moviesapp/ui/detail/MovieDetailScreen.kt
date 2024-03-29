@@ -20,11 +20,11 @@ import com.app.moviesapp.custom.widget.CastWidgetComponentModel
 import com.app.moviesapp.custom.widget.MovieWidget
 import com.app.moviesapp.custom.widget.MovieWidgetComponentModel
 import com.app.moviesapp.custom.widget.MovieWidgetModel
+import com.app.moviesapp.data.ui_models.MovieDetailUIModel
+import com.app.moviesapp.data.ui_models.MovieReviewsUIModel
 import com.app.moviesapp.ui.detail.components.MovieDetailPagerComponent
 import com.app.moviesapp.ui.detail.components.MovieDetailReviewsComponent
 import com.app.moviesapp.ui.detail.components.MovieDetailsComponent
-import com.app.moviesapp.data.ui_models.MovieDetailUIModel
-import com.app.moviesapp.data.ui_models.MovieReviewsUIModel
 import com.app.moviesapp.utils.Constant
 import com.app.moviesapp.utils.ScreenRoutes
 
@@ -33,7 +33,8 @@ import com.app.moviesapp.utils.ScreenRoutes
 fun DetailScreen(
     viewModel: ItemDetailScreenViewModel = hiltViewModel(), onBackClick: () -> Unit,
     openMovieListScreen: (String) -> Unit,
-    openMovieDetail: (String) -> Unit
+    openMovieDetail: (String) -> Unit,
+    openCastScreen: (String) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -54,14 +55,15 @@ fun DetailScreen(
                 onBackClick = onBackClick,
                 castModel = CastWidgetComponentModel(
                     "Cast Ekibi",
-                    cast = uiState.movieCastData),
+                    cast = uiState.movieCastData
+                ),
                 similar = uiState.movieSimilar,
                 recommendations = uiState.movieRecommendations,
                 reviews = uiState.movieReviews,
                 openMovieListScreen = openMovieListScreen,
-                openMovieDetail = openMovieDetail
+                openMovieDetail = openMovieDetail,
+                openCastScreen = openCastScreen
             )
-
         }
     }
 }
@@ -76,18 +78,30 @@ fun MovieDetailUI(
     reviews: List<MovieReviewsUIModel>,
     onBackClick: () -> Unit,
     openMovieListScreen: (String) -> Unit,
-    openMovieDetail: (String) -> Unit
-) {
+    openMovieDetail: (String) -> Unit,
+    openCastScreen: (String) -> Unit,
+
+    ) {
     Column(
         modifier = Modifier
             .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         MovieDetailPagerComponent(images = images, onBackClick = onBackClick)
-        MovieDetailsComponent(title = movie.title, overview = movie.overview)
-        CastWidget(model = castModel) {
+        MovieDetailsComponent(
+            title = movie.title,
+            overview = movie.overview,
+            duration = movie.duration
+        )
+        CastWidget(model = castModel, openCastListScreen = {
+            val route = ScreenRoutes.MOVIE_CAST_ROUTE.replace(
+                oldValue = "{movie_id}",
+                newValue = movie.movieId
+            )
+            openCastScreen(route)
+        })
 
-        }
+
         if (recommendations.isNotEmpty()) {
             MovieWidget(
                 model = MovieWidgetComponentModel(

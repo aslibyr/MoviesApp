@@ -8,6 +8,6 @@ object ScreenRoutes {
     const val MOVIE_DETAIL_ROUTE = "item_detail_route/{id}"
     const val SEARCH_ROUTE = "search_route"
     const val SEARCH_HOST_ROUTE = "search_host_route"
-    const val MOVIE_CAST_ROUTE = "movie_cast_route?id={id}"
+    const val MOVIE_CAST_ROUTE = "movie_cast_route?movie_id={movie_id}"
 
 }

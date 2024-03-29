@@ -18,6 +18,7 @@ fun MovieDetailResponse.toUIModel(): MovieDetailUIModel {
     return MovieDetailUIModel(
         title = this.title ?: "",
         overview = this.overview ?: "",
-        movieId = this.id.toString()
+        movieId = this.id.toString(),
+        duration = "${this.runtime} min."
     )
 }

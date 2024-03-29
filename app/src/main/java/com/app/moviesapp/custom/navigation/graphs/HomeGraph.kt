@@ -1,7 +1,5 @@
 package com.app.moviesapp.custom.navigation.graphs
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -9,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.app.moviesapp.ui.detail.DetailScreen
+import com.app.moviesapp.ui.detail.screens.MovieCastScreen
 import com.app.moviesapp.ui.home.HomeScreen
 import com.app.moviesapp.ui.movie_list.MovieListScreen
 import com.app.moviesapp.utils.ScreenRoutes
@@ -62,7 +61,18 @@ fun NavGraphBuilder.homeGraph(
                 },
                 openMovieDetail = { route ->
                     navController.navigate(route)
+                },
+                openCastScreen = { route ->
+                    navController.navigate(route)
                 })
+        }
+        composable(
+            route = ScreenRoutes.MOVIE_CAST_ROUTE,
+            arguments = listOf(navArgument("movie_id") {
+                type = NavType.StringType
+            })
+        ) {
+            MovieCastScreen()
         }
     }
 }
