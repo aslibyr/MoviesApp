@@ -1,6 +1,7 @@
-package com.app.moviesapp.ui.detail.screens
+package com.app.moviesapp.ui.detail.screens.cast
 
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,9 +27,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.SubcomposeAsyncImage
 import com.app.moviesapp.custom.loading.LoadingDialog
 import com.app.moviesapp.data.ui_models.MovieCastUIModel
+import com.app.moviesapp.utils.ScreenRoutes
 
 @Composable
-fun MovieCastScreen(viewModel: MovieCastScreenViewModel = hiltViewModel()) {
+fun MovieCastScreen(
+    viewModel: MovieCastScreenViewModel = hiltViewModel(),
+    openPersonScreen: (String) -> Unit
+) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val listState = rememberLazyListState()
@@ -36,7 +41,7 @@ fun MovieCastScreen(viewModel: MovieCastScreenViewModel = hiltViewModel()) {
     if (uiState.isSuccess) {
         LazyColumn(modifier = Modifier.fillMaxSize(), state = listState) {
             items(uiState.movieCastListData, key = { it.castName }) {
-                CastListItem(cast = it)
+                CastListItem(cast = it, openPersonScreen = openPersonScreen)
             }
         }
     }
@@ -51,12 +56,19 @@ fun MovieCastScreen(viewModel: MovieCastScreenViewModel = hiltViewModel()) {
 }
 
 @Composable
-fun CastListItem(cast: MovieCastUIModel) {
+fun CastListItem(cast: MovieCastUIModel, openPersonScreen: (String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(180.dp)
             .padding(8.dp)
+            .clickable {
+                val route = ScreenRoutes.PERSON_ROUTE.replace(
+                    oldValue = "{person_id}",
+                    newValue = cast.personId.toString()
+                )
+                openPersonScreen(route)
+            }
     ) {
         Row(
             modifier = Modifier

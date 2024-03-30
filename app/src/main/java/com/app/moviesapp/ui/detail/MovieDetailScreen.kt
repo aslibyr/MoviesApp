@@ -31,7 +31,7 @@ import com.app.moviesapp.utils.ScreenRoutes
 
 @Composable
 fun DetailScreen(
-    viewModel: ItemDetailScreenViewModel = hiltViewModel(), onBackClick: () -> Unit,
+    viewModel: MovieDetailScreenViewModel = hiltViewModel(), onBackClick: () -> Unit,
     openMovieListScreen: (String) -> Unit,
     openMovieDetail: (String) -> Unit,
     openCastScreen: (String) -> Unit,

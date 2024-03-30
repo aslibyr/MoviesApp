@@ -7,7 +7,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.app.moviesapp.ui.detail.DetailScreen
-import com.app.moviesapp.ui.detail.screens.MovieCastScreen
+import com.app.moviesapp.ui.detail.screens.cast.MovieCastScreen
+import com.app.moviesapp.ui.detail.screens.person.PersonScreen
 import com.app.moviesapp.ui.home.HomeScreen
 import com.app.moviesapp.ui.movie_list.MovieListScreen
 import com.app.moviesapp.utils.ScreenRoutes
@@ -72,7 +73,17 @@ fun NavGraphBuilder.homeGraph(
                 type = NavType.StringType
             })
         ) {
-            MovieCastScreen()
+            MovieCastScreen(openPersonScreen = { route ->
+                navController.navigate(route)
+            })
+        }
+        composable(
+            route = ScreenRoutes.PERSON_ROUTE,
+            arguments = listOf(navArgument("person_id") {
+                type = NavType.StringType
+            })
+        ) {
+            PersonScreen()
         }
     }
 }

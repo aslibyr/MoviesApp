@@ -18,6 +18,7 @@ fun MovieCreditResponseItem.MovieCastUIModel(): MovieCastUIModel {
         castName = this.name ?: "",
         character = this.character ?: "",
         profilePath = this.getImagePath(),
+        personId = this.id ?: 0
     )
 }
 

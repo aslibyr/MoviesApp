@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ItemDetailScreenViewModel @Inject constructor(
+class MovieDetailScreenViewModel @Inject constructor(
     private val webService: WebService,
     savedStateHandle: SavedStateHandle
 ) :

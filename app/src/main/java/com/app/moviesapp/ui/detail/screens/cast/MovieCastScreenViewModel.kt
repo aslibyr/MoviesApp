@@ -1,4 +1,4 @@
-package com.app.moviesapp.ui.detail.screens
+package com.app.moviesapp.ui.detail.screens.cast
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel

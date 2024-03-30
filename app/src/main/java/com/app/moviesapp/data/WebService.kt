@@ -6,6 +6,7 @@ import com.app.moviesapp.data.response.MovieDetailResponse
 import com.app.moviesapp.data.response.MovieImageResponse
 import com.app.moviesapp.data.response.MovieResponse
 import com.app.moviesapp.data.response.MovieReviewsResponse
+import com.app.moviesapp.data.response.PersonResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -68,4 +69,9 @@ interface WebService {
     suspend fun getImages(
         @Path("movie_id") id: String,
     ): MovieImageResponse
+
+    @GET("person/{person_id}")
+    suspend fun getPerson(
+        @Path("person_id") id: String,
+    ): PersonResponse
 }

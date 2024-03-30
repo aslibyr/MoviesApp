@@ -1,4 +1,4 @@
-package com.app.moviesapp.ui.detail.screens
+package com.app.moviesapp.ui.detail.screens.cast
 
 import com.app.moviesapp.data.ui_models.MovieCastUIModel
 
