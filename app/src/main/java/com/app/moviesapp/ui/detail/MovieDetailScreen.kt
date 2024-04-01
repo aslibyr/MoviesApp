@@ -25,14 +25,12 @@ import com.app.moviesapp.data.ui_models.MovieReviewsUIModel
 import com.app.moviesapp.ui.detail.components.MovieDetailPagerComponent
 import com.app.moviesapp.ui.detail.components.MovieDetailReviewsComponent
 import com.app.moviesapp.ui.detail.components.MovieDetailsComponent
-import com.app.moviesapp.utils.Constant
-import com.app.moviesapp.utils.ScreenRoutes
 
 
 @Composable
 fun DetailScreen(
     viewModel: MovieDetailScreenViewModel = hiltViewModel(), onBackClick: () -> Unit,
-    openMovieListScreen: (String) -> Unit,
+    openMovieListScreen: (String, String) -> Unit,
     openMovieDetail: (String) -> Unit,
     openCastScreen: (String) -> Unit,
     openPersonScreen: (String) -> Unit
@@ -79,7 +77,7 @@ fun MovieDetailUI(
     castModel: CastWidgetComponentModel,
     reviews: List<MovieReviewsUIModel>,
     onBackClick: () -> Unit,
-    openMovieListScreen: (String) -> Unit,
+    openMovieListScreen: (String, String) -> Unit,
     openMovieDetail: (String) -> Unit,
     openCastScreen: (String) -> Unit,
     openPersonScreen: (String) -> Unit
@@ -97,11 +95,7 @@ fun MovieDetailUI(
             duration = movie.duration
         )
         CastWidget(model = castModel, openCastListScreen = {
-            val route = ScreenRoutes.MOVIE_CAST_ROUTE.replace(
-                oldValue = "{movie_id}",
-                newValue = movie.movieId
-            )
-            openCastScreen(route)
+            openCastScreen(movie.movieId)
         }, openPersonScreen = openPersonScreen
         )
 
@@ -112,14 +106,7 @@ fun MovieDetailUI(
                     widgetCategory = "Recommendations",
                     movies = recommendations
                 ), openListScreen = {
-                    val route = ScreenRoutes.HOME_LIST_ROUTE.replace(
-                        oldValue = Constant.TYPE,
-                        newValue = MovieListType.RECOMMENDATIONS.type
-                    ).replace(
-                        oldValue = "{movie_id}",
-                        newValue = movie.movieId
-                    )
-                    openMovieListScreen(route)
+                    openMovieListScreen(MovieListType.RECOMMENDATIONS.type, movie.movieId)
                 },
                 onMovieClick = { route ->
                     openMovieDetail(route)
@@ -131,14 +118,7 @@ fun MovieDetailUI(
                     widgetCategory = "Similar",
                     movies = similar
                 ), openListScreen = {
-                    val route = ScreenRoutes.HOME_LIST_ROUTE.replace(
-                        oldValue = Constant.TYPE,
-                        newValue = MovieListType.SIMILAR.type
-                    ).replace(
-                        oldValue = "{movie_id}",
-                        newValue = movie.movieId
-                    )
-                    openMovieListScreen(route)
+                    openMovieListScreen(MovieListType.SIMILAR.type, movie.movieId)
                 },
                 onMovieClick = { route ->
 

@@ -29,8 +29,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
-import com.app.moviesapp.utils.Constant
-import com.app.moviesapp.utils.ScreenRoutes
 
 @Composable
 fun MovieWidget(
@@ -75,11 +73,7 @@ fun MovieWidgetItem(movie: MovieWidgetModel, onMovieClick: (String) -> Unit) {
         modifier = Modifier
             .padding(8.dp)
             .clickable {
-                val route = ScreenRoutes.MOVIE_DETAIL_ROUTE.replace(
-                    oldValue = Constant.ID,
-                    newValue = movie.movieId
-                )
-                onMovieClick(route)
+                onMovieClick(movie.movieId)
             },
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)

@@ -11,6 +11,7 @@ import com.app.moviesapp.ui.detail.screens.cast.MovieCastScreen
 import com.app.moviesapp.ui.detail.screens.person.PersonScreen
 import com.app.moviesapp.ui.home.HomeScreen
 import com.app.moviesapp.ui.movie_list.MovieListScreen
+import com.app.moviesapp.utils.Constant
 import com.app.moviesapp.utils.ScreenRoutes
 
 fun NavGraphBuilder.homeGraph(
@@ -57,18 +58,36 @@ fun NavGraphBuilder.homeGraph(
             )
         ) {
             DetailScreen(onBackClick = { navController.popBackStack() },
-                openMovieListScreen = { route ->
+                openMovieListScreen = { type, movieId ->
+                    val route = ScreenRoutes.HOME_LIST_ROUTE.replace(
+                        oldValue = Constant.TYPE,
+                        newValue = type
+                    ).replace(
+                        oldValue = "{movie_id}",
+                        newValue = movieId
+                    )
                     navController.navigate(route)
                 },
-                openMovieDetail = { route ->
+                openMovieDetail = { movieId ->
+                    val route = ScreenRoutes.MOVIE_DETAIL_ROUTE.replace(
+                        oldValue = Constant.ID,
+                        newValue = movieId
+                    )
                     navController.navigate(route)
                 },
-                openCastScreen = { route ->
+                openCastScreen = { movieId ->
+                    val route = ScreenRoutes.MOVIE_CAST_ROUTE.replace(
+                        oldValue = "{movie_id}",
+                        newValue = movieId
+                    )
                     navController.navigate(route)
                 },
-                openPersonScreen = { route ->
+                openPersonScreen = { personId ->
+                    val route = ScreenRoutes.PERSON_ROUTE.replace(
+                        oldValue = "{person_id}",
+                        newValue = personId
+                    )
                     navController.navigate(route)
-
                 })
         }
         composable(
