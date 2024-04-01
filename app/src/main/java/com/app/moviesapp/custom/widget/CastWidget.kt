@@ -27,11 +27,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.app.moviesapp.utils.ScreenRoutes
 
 @Composable
 fun CastWidget(
     model: CastWidgetComponentModel,
     openCastListScreen: () -> Unit,
+    openPersonScreen: (String) -> Unit
 ) {
 
     Column(
@@ -61,8 +63,9 @@ fun CastWidget(
         }
         LazyRow(Modifier.fillMaxWidth(), contentPadding = PaddingValues(start = 16.dp)) {
             items(model.cast) { cast ->
-                CastWidgetItem(cast = cast) {
-                }
+                CastWidgetItem(cast = cast, openPersonScreen = openPersonScreen)
+
+
             }
         }
     }
@@ -71,7 +74,7 @@ fun CastWidget(
 
 @Composable
 fun CastWidgetItem(
-    cast: CastWidgetModel, onCastClick: (String) -> Unit
+    cast: CastWidgetModel, openPersonScreen: (String) -> Unit
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -79,7 +82,14 @@ fun CastWidgetItem(
     ) {
         Card(
             modifier = Modifier
-                .padding(8.dp),
+                .padding(8.dp)
+                .clickable {
+                    val route = ScreenRoutes.PERSON_ROUTE.replace(
+                        oldValue = "{person_id}",
+                        newValue = cast.personId.toString()
+                    )
+                    openPersonScreen(route)
+                },
             elevation = CardDefaults.cardElevation(5.dp),
             shape = RoundedCornerShape(15.dp),
             colors = CardDefaults.cardColors(containerColor = Color.White)

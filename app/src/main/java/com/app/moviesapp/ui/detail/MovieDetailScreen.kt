@@ -35,6 +35,7 @@ fun DetailScreen(
     openMovieListScreen: (String) -> Unit,
     openMovieDetail: (String) -> Unit,
     openCastScreen: (String) -> Unit,
+    openPersonScreen: (String) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -62,7 +63,8 @@ fun DetailScreen(
                 reviews = uiState.movieReviews,
                 openMovieListScreen = openMovieListScreen,
                 openMovieDetail = openMovieDetail,
-                openCastScreen = openCastScreen
+                openCastScreen = openCastScreen,
+                openPersonScreen = openPersonScreen
             )
         }
     }
@@ -80,6 +82,7 @@ fun MovieDetailUI(
     openMovieListScreen: (String) -> Unit,
     openMovieDetail: (String) -> Unit,
     openCastScreen: (String) -> Unit,
+    openPersonScreen: (String) -> Unit
 
     ) {
     Column(
@@ -99,7 +102,8 @@ fun MovieDetailUI(
                 newValue = movie.movieId
             )
             openCastScreen(route)
-        })
+        }, openPersonScreen = openPersonScreen
+        )
 
 
         if (recommendations.isNotEmpty()) {

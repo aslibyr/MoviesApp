@@ -2,12 +2,13 @@ package com.app.moviesapp.ui.detail.screens.person
 
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -18,22 +19,29 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.SubcomposeAsyncImage
 import com.app.moviesapp.custom.indicator.PagerIndicator
+import com.app.moviesapp.custom.popup.CustomImagePopUp
 import com.app.moviesapp.data.ui_models.PersonUIModel
 
 
 @Composable
-fun PersonScreen(viewModel: PersonScreenViewModel = hiltViewModel()) {
+fun PersonScreen(viewModel: PersonScreenViewModel = hiltViewModel(), onBackClick: () -> Unit = {}) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
@@ -46,31 +54,46 @@ fun PersonScreen(viewModel: PersonScreenViewModel = hiltViewModel()) {
         Toast.makeText(context, "Network error", Toast.LENGTH_LONG).show()
     }
     if (uiState.isSuccess) {
-        PersonScreenUI(person = uiState.personData, image = uiState.images)
+        PersonScreenUI(person = uiState.personData, images = uiState.images)
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun PersonScreenUI(person: PersonUIModel, image: List<String>) {
+fun PersonScreenUI(person: PersonUIModel, images: List<String>) {
+    val pagerState = rememberPagerState {
+        images.size
+    }
+    var showImagePopup by remember {
+        mutableStateOf(false)
+    }
+    if (showImagePopup) {
+        CustomImagePopUp(image = images[pagerState.currentPage]) {
+            showImagePopup = false
+        }
+    }
     Column(
         modifier = Modifier
+            .blur(if (showImagePopup) 10.dp else 0.dp)
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
-        val pagerState = rememberPagerState {
-            image.size
-        }
+
         Box(
             modifier = Modifier
-                .height(500.dp),
+                .fillMaxHeight(0.5f)
+                .padding(bottom = 8.dp),
             contentAlignment = Alignment.TopCenter
         ) {
             HorizontalPager(state = pagerState) { page ->
-                val currentImage = image.getOrNull(page)
+                val currentImage = images.getOrNull(page)
                 if (currentImage != null) {
                     SubcomposeAsyncImage(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                showImagePopup = true
+                            },
                         model = currentImage,
                         contentDescription = "",
                         contentScale = ContentScale.FillWidth,
@@ -83,7 +106,7 @@ fun PersonScreenUI(person: PersonUIModel, image: List<String>) {
             Box(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 24.dp)
+                    .padding(bottom = 16.dp)
             ) {
                 PagerIndicator(
                     pagerState = pagerState, indicatorSize = 8.dp,
@@ -95,15 +118,18 @@ fun PersonScreenUI(person: PersonUIModel, image: List<String>) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Blue)
+                .padding(horizontal = 8.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             Text(
                 text = person.name,
-                fontSize = 16.sp,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
                 color = Color.White
             )
             Text(
                 text = person.biography,
+                fontStyle = FontStyle.Italic,
                 color = Color.White
             )
         }

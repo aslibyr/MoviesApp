@@ -15,7 +15,7 @@ import com.app.moviesapp.utils.ScreenRoutes
 
 fun NavGraphBuilder.homeGraph(
     navController: NavController,
-    shouldBottomBarVisible: (Boolean) -> Unit
+    shouldBottomBarVisible: (Boolean) -> Unit = {}
 ) {
     navigation(
         startDestination = ScreenRoutes.HOME_ROUTE,
@@ -65,6 +65,10 @@ fun NavGraphBuilder.homeGraph(
                 },
                 openCastScreen = { route ->
                     navController.navigate(route)
+                },
+                openPersonScreen = { route ->
+                    navController.navigate(route)
+
                 })
         }
         composable(
