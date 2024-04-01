@@ -30,6 +30,7 @@ class PersonScreenViewModel @Inject constructor(
 
     init {
         getPerson(personId)
+        getPersonImages(personId)
     }
 
     private fun getPerson(personId: String) {
@@ -65,6 +66,49 @@ class PersonScreenViewModel @Inject constructor(
                             isLoading = false,
                             isSuccess = true
                         )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getPersonImages(id: String) {
+        viewModelScope.launch {
+            when (val response = safeApiCall(Dispatchers.IO) {
+                webService.getPersonImages(id)
+            }) {
+                is ResultWrapper.GenericError -> {
+                    _uiState.update {
+                        it.copy(errorMessage = response.error.toString(), isLoading = false)
+                    }
+                }
+
+                ResultWrapper.Loading -> {
+                    _uiState.update {
+                        it.copy(isLoading = true)
+                    }
+                }
+
+                ResultWrapper.NetworkError -> {
+                    _uiState.update {
+                        it.copy(
+                            errorMessage = "İnternet bağlantınızı kontrol edin.",
+                            isLoading = false
+                        )
+                    }
+                }
+
+                is ResultWrapper.Success -> {
+                    val images =
+                        response.value.profiles?.mapNotNull { it?.getImagePath() }?.take(10)
+
+                    if (images != null) {
+                        _uiState.update {
+                            it.copy(
+                                images = images,
+                                isLoading = false,
+                            )
+                        }
                     }
                 }
             }

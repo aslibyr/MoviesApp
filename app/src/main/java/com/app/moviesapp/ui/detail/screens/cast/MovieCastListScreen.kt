@@ -31,7 +31,7 @@ import com.app.moviesapp.utils.ScreenRoutes
 
 @Composable
 fun MovieCastScreen(
-    viewModel: MovieCastScreenViewModel = hiltViewModel(),
+    viewModel: MovieCastListScreenViewModel = hiltViewModel(),
     openPersonScreen: (String) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()

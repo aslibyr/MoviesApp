@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieCastScreenViewModel @Inject constructor(
+class MovieCastListScreenViewModel @Inject constructor(
     private val webService: WebService,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
