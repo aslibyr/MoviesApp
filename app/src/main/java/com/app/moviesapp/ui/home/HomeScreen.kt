@@ -28,10 +28,10 @@ import coil.compose.AsyncImage
 import com.app.moviesapp.R
 import com.app.moviesapp.base.BasePagingResponse
 import com.app.moviesapp.custom.indicator.PagerIndicator
-import com.app.moviesapp.data.mapper.MovieWidgetModel
 import com.app.moviesapp.custom.navigation.graphs.MovieListType
 import com.app.moviesapp.custom.widget.MovieWidget
 import com.app.moviesapp.custom.widget.MovieWidgetComponentModel
+import com.app.moviesapp.data.mapper.MovieWidgetModel
 import com.app.moviesapp.data.response.MovieResponse
 import com.app.moviesapp.utils.Constant
 import com.app.moviesapp.utils.ResultWrapper
@@ -96,7 +96,7 @@ fun HomeScreen(
                                 .fillMaxSize()
                                 .clickable {
                                     onMovieClick(
-                                        ScreenRoutes.MOVIE_DETAIL_ROUTE.replace(
+                                        ScreenRoutes.HOME_MOVIE_DETAIL_ROUTE.replace(
                                             oldValue = Constant.ID,
                                             newValue = response.results[it].id.toString()
                                         )
@@ -126,10 +126,7 @@ fun HomeScreen(
                         movies = response.results.map { it.MovieWidgetModel() }),
                     openListScreen = {
                         openListScreen(
-                            ScreenRoutes.HOME_LIST_ROUTE.replace(
-                                oldValue = Constant.TYPE,
-                                newValue = MovieListType.NOW_PLAYING.type
-                            )
+                            MovieListType.NOW_PLAYING.type
                         )
                     },
                     onMovieClick,
@@ -154,10 +151,7 @@ fun HomeScreen(
                     movies = response.results.map { it.MovieWidgetModel() }
                 ), openListScreen = {
                     openListScreen(
-                        ScreenRoutes.HOME_LIST_ROUTE.replace(
-                            oldValue = Constant.TYPE,
-                            newValue = MovieListType.POPULAR.type
-                        )
+                        MovieListType.POPULAR.type
                     )
                 }, onMovieClick
                 )
@@ -182,10 +176,7 @@ fun HomeScreen(
                         movies = response.results.map { it.MovieWidgetModel() }),
                     openListScreen = {
                         openListScreen(
-                            ScreenRoutes.HOME_LIST_ROUTE.replace(
-                                oldValue = Constant.TYPE,
-                                newValue = MovieListType.TOP_RATED.type
-                            )
+                            MovieListType.TOP_RATED.type
                         )
                     },
                     onMovieClick,
@@ -211,10 +202,7 @@ fun HomeScreen(
                         movies = response.results.map { it.MovieWidgetModel() }),
                     openListScreen = {
                         openListScreen(
-                            ScreenRoutes.HOME_LIST_ROUTE.replace(
-                                oldValue = Constant.TYPE,
-                                newValue = MovieListType.UPCOMING.type
-                            )
+                            MovieListType.UPCOMING.type
                         )
                     },
                     onMovieClick,

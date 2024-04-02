@@ -29,8 +29,6 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
 import com.app.moviesapp.custom.buttons.ListResetButton
 import com.app.moviesapp.data.response.MovieResponse
-import com.app.moviesapp.utils.Constant
-import com.app.moviesapp.utils.ScreenRoutes
 import kotlinx.coroutines.launch
 
 
@@ -87,10 +85,7 @@ fun MoviesListItem(movie: MovieResponse, onMovieClick: (String) -> Unit) {
             .clip(RoundedCornerShape(topEnd = 20.dp, topStart = 20.dp))
             .clickable {
                 onMovieClick(
-                    ScreenRoutes.MOVIE_DETAIL_ROUTE.replace(
-                        oldValue = Constant.ID,
-                        newValue = movie.id.toString()
-                    )
+                    movie.id.toString()
                 )
             },
         horizontalAlignment = Alignment.CenterHorizontally,

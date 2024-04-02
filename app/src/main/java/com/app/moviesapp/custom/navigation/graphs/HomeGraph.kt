@@ -26,10 +26,18 @@ fun NavGraphBuilder.homeGraph(
             route = ScreenRoutes.HOME_ROUTE
         ) {
             HomeScreen(
-                onMovieClick = { route ->
+                onMovieClick = { movieId ->
+                    val route = ScreenRoutes.HOME_MOVIE_DETAIL_ROUTE.replace(
+                        oldValue = Constant.ID,
+                        newValue = movieId
+                    )
                     navController.navigate(route)
                 },
-                openListScreen = { route ->
+                openListScreen = { type ->
+                    val route = ScreenRoutes.HOME_LIST_ROUTE.replace(
+                        oldValue = Constant.TYPE,
+                        newValue = type
+                    )
                     navController.navigate(route)
                 }
             )
@@ -45,12 +53,16 @@ fun NavGraphBuilder.homeGraph(
                 },
             )
         ) {
-            MovieListScreen(onMovieClick = { route ->
+            MovieListScreen(onMovieClick = { movieId ->
+                val route = ScreenRoutes.HOME_MOVIE_DETAIL_ROUTE.replace(
+                    oldValue = Constant.ID,
+                    newValue = movieId
+                )
                 navController.navigate(route)
             })
         }
         composable(
-            route = ScreenRoutes.MOVIE_DETAIL_ROUTE,
+            route = ScreenRoutes.HOME_MOVIE_DETAIL_ROUTE,
             arguments = listOf(
                 navArgument("id") {
                     type = NavType.StringType
@@ -69,21 +81,21 @@ fun NavGraphBuilder.homeGraph(
                     navController.navigate(route)
                 },
                 openMovieDetail = { movieId ->
-                    val route = ScreenRoutes.MOVIE_DETAIL_ROUTE.replace(
+                    val route = ScreenRoutes.HOME_MOVIE_DETAIL_ROUTE.replace(
                         oldValue = Constant.ID,
                         newValue = movieId
                     )
                     navController.navigate(route)
                 },
                 openCastScreen = { movieId ->
-                    val route = ScreenRoutes.MOVIE_CAST_ROUTE.replace(
+                    val route = ScreenRoutes.HOME_MOVIE_CAST_ROUTE.replace(
                         oldValue = "{movie_id}",
                         newValue = movieId
                     )
                     navController.navigate(route)
                 },
                 openPersonScreen = { personId ->
-                    val route = ScreenRoutes.PERSON_ROUTE.replace(
+                    val route = ScreenRoutes.HOME_PERSON_ROUTE.replace(
                         oldValue = "{person_id}",
                         newValue = personId
                     )
@@ -91,17 +103,21 @@ fun NavGraphBuilder.homeGraph(
                 })
         }
         composable(
-            route = ScreenRoutes.MOVIE_CAST_ROUTE,
+            route = ScreenRoutes.HOME_MOVIE_CAST_ROUTE,
             arguments = listOf(navArgument("movie_id") {
                 type = NavType.StringType
             })
         ) {
-            MovieCastScreen(openPersonScreen = { route ->
+            MovieCastScreen(openPersonScreen = { personId ->
+                val route = ScreenRoutes.HOME_PERSON_ROUTE.replace(
+                    oldValue = "{person_id}",
+                    newValue = personId
+                )
                 navController.navigate(route)
             })
         }
         composable(
-            route = ScreenRoutes.PERSON_ROUTE,
+            route = ScreenRoutes.HOME_PERSON_ROUTE,
             arguments = listOf(navArgument("person_id") {
                 type = NavType.StringType
             })

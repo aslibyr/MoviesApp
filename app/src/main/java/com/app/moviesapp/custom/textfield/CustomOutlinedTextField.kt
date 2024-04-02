@@ -83,6 +83,8 @@ fun CustomOutlinedTextField(
              focusedTextColor = textColor,
              unfocusedTextColor = textColor
          )*/
-        shape = RoundedCornerShape(30.dp)
+        shape = RoundedCornerShape(30.dp),
+        maxLines = 1,
+        singleLine = true
     )
 }

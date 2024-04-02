@@ -27,7 +27,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.SubcomposeAsyncImage
 import com.app.moviesapp.custom.loading.LoadingDialog
 import com.app.moviesapp.data.ui_models.MovieCastUIModel
-import com.app.moviesapp.utils.ScreenRoutes
 
 @Composable
 fun MovieCastScreen(
@@ -63,11 +62,7 @@ fun CastListItem(cast: MovieCastUIModel, openPersonScreen: (String) -> Unit) {
             .height(180.dp)
             .padding(8.dp)
             .clickable {
-                val route = ScreenRoutes.PERSON_ROUTE.replace(
-                    oldValue = "{person_id}",
-                    newValue = cast.personId.toString()
-                )
-                openPersonScreen(route)
+                openPersonScreen(cast.personId.toString())
             }
     ) {
         Row(

@@ -61,7 +61,7 @@ fun BottomBar(
         BottomNavigationItem(
             title = "Search",
             icon = Icons.Filled.Search,
-            route = ScreenRoutes.SEARCH_ROUTE
+            route = ScreenRoutes.SEARCH_HOST_ROUTE
         ),
 
         )
