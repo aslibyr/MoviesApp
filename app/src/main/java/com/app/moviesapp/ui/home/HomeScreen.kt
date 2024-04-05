@@ -96,10 +96,7 @@ fun HomeScreen(
                                 .fillMaxSize()
                                 .clickable {
                                     onMovieClick(
-                                        ScreenRoutes.HOME_MOVIE_DETAIL_ROUTE.replace(
-                                            oldValue = Constant.ID,
-                                            newValue = response.results[it].id.toString()
-                                        )
+                                        response.results[it].id.toString()
                                     )
                                 },
                             contentScale = ContentScale.Crop
