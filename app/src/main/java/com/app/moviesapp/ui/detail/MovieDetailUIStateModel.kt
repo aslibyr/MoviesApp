@@ -14,5 +14,5 @@ data class MovieDetailUIStateModel(
     val movieReviews: List<MovieReviewsUIModel> = emptyList(),
     val isLoading: Boolean = true,
     val errorMessage: String = "",
-    val successCount: Int = 0
+    val successCount: Int = 0,
 )

@@ -15,6 +15,12 @@ sealed class ResultWrapper<out T> {
 
 
 }
+sealed class ResultWrapperLocal<out T> {
+    data class Success<out T>(val value: T) : ResultWrapperLocal<T>()
+    data class Error(val error: String? = null) :
+        ResultWrapperLocal<Nothing>()
+
+}
 
 suspend fun <T> safeApiCall(
     dispatcher: CoroutineDispatcher,
