@@ -4,10 +4,14 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.moviesapp.data.WebService
+import com.app.moviesapp.data.local.MoviesAppDataBase
 import com.app.moviesapp.data.mapper.CastWidgetModel
 import com.app.moviesapp.data.mapper.MovieWidgetModel
 import com.app.moviesapp.data.mapper.toUIModel
+import com.app.moviesapp.data.repository.MovieRepository
+import com.app.moviesapp.data.ui_models.MovieDetailUIModel
 import com.app.moviesapp.utils.ResultWrapper
+import com.app.moviesapp.utils.ResultWrapperLocal
 import com.app.moviesapp.utils.safeApiCall
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,6 +25,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieDetailScreenViewModel @Inject constructor(
     private val webService: WebService,
+    private val movieRepository: MovieRepository,
     savedStateHandle: SavedStateHandle
 ) :
     ViewModel() {
@@ -30,6 +35,7 @@ class MovieDetailScreenViewModel @Inject constructor(
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.WhileSubscribed(),
         MovieDetailUIStateModel()
     )
+
 
 
     init {
@@ -43,14 +49,12 @@ class MovieDetailScreenViewModel @Inject constructor(
 
 
     private fun getMovieDetails(id: String) {
-        viewModelScope.launch {
-            when (val response = safeApiCall(Dispatchers.IO) {
-                webService.getMovieDetails(id)
-            }) {
+        viewModelScope.launch(Dispatchers.IO) {
+            when (val response = movieRepository.getMovieDetails(id)) {
                 is ResultWrapper.Success -> {
                     _uiState.update {
                         it.copy(
-                            movieDetailData = response.value.toUIModel(),
+                            movieDetailData = response.value,
                             isLoading = false,
                             successCount = _uiState.value.successCount.plus(1)
                         )
@@ -240,7 +244,7 @@ class MovieDetailScreenViewModel @Inject constructor(
     }
 
     private fun getImages(id: String) {
-        viewModelScope.launch {
+        viewModelScope.launch() {
             when (val response = safeApiCall(Dispatchers.IO) {
                 webService.getImages(id)
             }) {
@@ -276,6 +280,27 @@ class MovieDetailScreenViewModel @Inject constructor(
                         )
                     }
                 }
+            }
+        }
+    }
+     fun addMovieToFavorite(movie : MovieDetailUIModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            when(val result = movieRepository.addMovieToFavorite(movie)) {
+                is ResultWrapperLocal.Error -> {}
+                is ResultWrapperLocal.Success -> {
+                    _uiState.value = _uiState.value.copy(movieDetailData = result.value)
+                }
+            }
+        }
+    }
+
+     fun removeMovieFromFavorite(movie : MovieDetailUIModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            when(val result = movieRepository.removeMovieFromFavorite(movie)) {
+                is ResultWrapperLocal.Error -> {
+                }
+                is ResultWrapperLocal.Success -> {
+                    _uiState.value = _uiState.value.copy(movieDetailData = result.value)                }
             }
         }
     }

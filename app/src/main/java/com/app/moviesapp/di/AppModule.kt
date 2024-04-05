@@ -1,11 +1,16 @@
 package com.app.moviesapp.di
 
+import android.content.Context
+import androidx.room.Room
 import com.app.moviesapp.data.WebService
+import com.app.moviesapp.data.local.MoviesAppDataBase
 import com.app.moviesapp.utils.Constant
 import com.app.moviesapp.utils.Constant.BASE_URL
+import com.app.moviesapp.utils.Constant.ROOM_DATA_BASE_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -68,5 +73,12 @@ object AppModule {
         .build()
         .create(WebService::class.java)
 
+    @Provides
+    @Singleton
+    fun provideStockDatabase(@ApplicationContext context: Context): MoviesAppDataBase {
+        return Room.databaseBuilder(context, MoviesAppDataBase::class.java, ROOM_DATA_BASE_NAME)
+            .fallbackToDestructiveMigration()
+            .build()
+    }
 
 }

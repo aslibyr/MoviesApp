@@ -62,7 +62,14 @@ fun DetailScreen(
                 openMovieListScreen = openMovieListScreen,
                 openMovieDetail = openMovieDetail,
                 openCastScreen = openCastScreen,
-                openPersonScreen = openPersonScreen
+                openPersonScreen = openPersonScreen,
+                onFavoriteClicked = {isFavorite ->
+                    if (isFavorite) {
+                        viewModel.removeMovieFromFavorite(uiState.movieDetailData)
+                    } else {
+                        viewModel.addMovieToFavorite(uiState.movieDetailData)
+                    }
+                },
             )
         }
     }
@@ -80,7 +87,7 @@ fun MovieDetailUI(
     openMovieListScreen: (String, String) -> Unit,
     openMovieDetail: (String) -> Unit,
     openCastScreen: (String) -> Unit,
-    openPersonScreen: (String) -> Unit
+    openPersonScreen: (String) -> Unit,onFavoriteClicked : (Boolean) -> Unit
 
     ) {
     Column(
@@ -88,7 +95,7 @@ fun MovieDetailUI(
             .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        MovieDetailPagerComponent(images = images, onBackClick = onBackClick)
+        MovieDetailPagerComponent(images = images, onBackClick = onBackClick, isFavorite = movie.isFavorite, onFavoriteClicked = onFavoriteClicked)
         MovieDetailsComponent(
             title = movie.title,
             overview = movie.overview,

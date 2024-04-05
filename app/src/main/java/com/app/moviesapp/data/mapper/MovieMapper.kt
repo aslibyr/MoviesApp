@@ -1,6 +1,7 @@
 package com.app.moviesapp.data.mapper
 
 import com.app.moviesapp.custom.widget.MovieWidgetModel
+import com.app.moviesapp.data.local.entity.FavoriteMovieEntity
 import com.app.moviesapp.data.response.MovieDetailResponse
 import com.app.moviesapp.data.response.MovieResponse
 import com.app.moviesapp.data.ui_models.MovieDetailUIModel
@@ -14,11 +15,21 @@ fun MovieResponse.MovieWidgetModel() : MovieWidgetModel {
     )
 }
 
-fun MovieDetailResponse.toUIModel(): MovieDetailUIModel {
+fun MovieDetailResponse.toUIModel(isFavorite : Boolean): MovieDetailUIModel {
     return MovieDetailUIModel(
         title = this.title ?: "",
         overview = this.overview ?: "",
         movieId = this.id.toString(),
-        duration = "${this.runtime} min."
+        duration = "${this.runtime} min.",
+        isFavorite = isFavorite
+    )
+}
+
+fun MovieDetailUIModel.toFavoriteMovieEntity(): FavoriteMovieEntity {
+    return FavoriteMovieEntity(
+        title = this.title ,
+        overview = this.overview ,
+        movieId = this.movieId,
+        duration = "${this.duration} min.",
     )
 }

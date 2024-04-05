@@ -11,6 +11,8 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.NavigateBefore
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -26,7 +28,7 @@ import com.app.moviesapp.custom.indicator.PagerIndicator
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MovieDetailPagerComponent(images: List<String>, onBackClick: () -> Unit) {
+fun MovieDetailPagerComponent(images: List<String>, onBackClick: () -> Unit,isFavorite : Boolean,onFavoriteClicked : (Boolean) -> Unit) {
     val pagerState = rememberPagerState {
         images.size
     }
@@ -65,6 +67,19 @@ fun MovieDetailPagerComponent(images: List<String>, onBackClick: () -> Unit) {
                 .padding(start = 16.dp, top = 16.dp)
                 .clickable {
                     onBackClick()
+                }
+                .shadow(50.dp),
+            tint = Color.White)
+
+        val favoriteIcon = if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder
+        Icon(imageVector = favoriteIcon,
+            "",
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .size(38.dp)
+                .padding(end = 16.dp, top = 16.dp)
+                .clickable {
+                    onFavoriteClicked(isFavorite)
                 }
                 .shadow(50.dp),
             tint = Color.White)

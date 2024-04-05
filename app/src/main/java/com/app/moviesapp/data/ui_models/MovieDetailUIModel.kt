@@ -6,7 +6,8 @@ data class MovieDetailUIModel(
     val title: String = "",
     val overview: String = "",
     val movieId: String = "",
-    val duration: String = ""
+    val duration: String = "",
+    val isFavorite : Boolean = false
 )
 
 
