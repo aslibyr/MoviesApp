@@ -10,12 +10,17 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -25,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -54,13 +60,28 @@ fun PersonScreen(viewModel: PersonScreenViewModel = hiltViewModel(), onBackClick
         Toast.makeText(context, "Network error", Toast.LENGTH_LONG).show()
     }
     if (uiState.isSuccess) {
-        PersonScreenUI(person = uiState.personData, images = uiState.images)
+        PersonScreenUI(
+            person = uiState.personData,
+            images = uiState.images,
+            isFavorite = uiState.personData.isFavorite,
+            onFavoriteClicked = { isFavorite ->
+                if (isFavorite) {
+                    viewModel.removePersonFromFavorite(uiState.personData)
+                } else {
+                    viewModel.addPersonToFavorite(uiState.personData)
+                }
+            })
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun PersonScreenUI(person: PersonUIModel, images: List<String>) {
+fun PersonScreenUI(
+    person: PersonUIModel,
+    images: List<String>,
+    isFavorite: Boolean,
+    onFavoriteClicked: (Boolean) -> Unit
+) {
     val pagerState = rememberPagerState {
         images.size
     }
@@ -103,6 +124,20 @@ fun PersonScreenUI(person: PersonUIModel, images: List<String>) {
                     )
                 }
             }
+
+            val favoriteIcon =
+                if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder
+            Icon(imageVector = favoriteIcon,
+                "",
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .size(38.dp)
+                    .padding(end = 16.dp, top = 16.dp)
+                    .clickable {
+                        onFavoriteClicked(isFavorite)
+                    }
+                    .shadow(50.dp),
+                tint = Color.White)
             Box(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
