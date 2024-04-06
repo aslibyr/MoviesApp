@@ -4,7 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.moviesapp.data.WebService
-import com.app.moviesapp.data.local.MoviesAppDataBase
 import com.app.moviesapp.data.mapper.CastWidgetModel
 import com.app.moviesapp.data.mapper.MovieWidgetModel
 import com.app.moviesapp.data.mapper.toUIModel
@@ -35,9 +34,6 @@ class MovieDetailScreenViewModel @Inject constructor(
     val uiState = _uiState.stateIn(viewModelScope, SharingStarted.WhileSubscribed(),
         MovieDetailUIStateModel()
     )
-
-
-
     init {
         getMovieDetails(id = id)
         getMovieCredits(id = id)

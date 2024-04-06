@@ -5,7 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.moviesapp.data.WebService
 import com.app.moviesapp.data.mapper.PersonUIModel
+import com.app.moviesapp.data.repository.PersonRepository
+import com.app.moviesapp.data.ui_models.PersonUIModel
 import com.app.moviesapp.utils.ResultWrapper
+import com.app.moviesapp.utils.ResultWrapperLocal
 import com.app.moviesapp.utils.safeApiCall
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -19,6 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PersonScreenViewModel @Inject constructor(
     private val webService: WebService,
+    private val repository: PersonRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(PersonUIStateModel())
@@ -34,7 +38,7 @@ class PersonScreenViewModel @Inject constructor(
     }
 
     private fun getPerson(personId: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             when (val response = safeApiCall(Dispatchers.IO) {
                 webService.getPerson(personId)
             }) {
@@ -61,12 +65,37 @@ class PersonScreenViewModel @Inject constructor(
 
                 is ResultWrapper.Success -> {
                     _uiState.update {
+                        val isFavorite = repository.isFavorite(personId)
                         it.copy(
-                            personData = response.value.PersonUIModel(),
+                            personData = response.value.PersonUIModel(isFavorite),
                             isLoading = false,
                             isSuccess = true
                         )
                     }
+                }
+            }
+        }
+    }
+
+    fun removePersonFromFavorite(person: PersonUIModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            when (val result = repository.removePersonFromFavorite(person)) {
+                is ResultWrapperLocal.Error -> {
+                }
+
+                is ResultWrapperLocal.Success -> {
+                    _uiState.value = _uiState.value.copy(personData = result.value)
+                }
+            }
+        }
+    }
+
+    fun addPersonToFavorite(person: PersonUIModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            when (val result = repository.addPersonToFavorite(person)) {
+                is ResultWrapperLocal.Error -> {}
+                is ResultWrapperLocal.Success -> {
+                    _uiState.value = _uiState.value.copy(personData = result.value)
                 }
             }
         }
