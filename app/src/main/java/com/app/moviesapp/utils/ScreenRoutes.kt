@@ -19,4 +19,8 @@ object ScreenRoutes {
     const val SEARCH_MOVIE_CAST_ROUTE = "search_movie_cast_route?movie_id={movie_id}"
     const val SEARCH_PERSON_ROUTE = "search_person_route/{person_id}"
 
+    //FAVORITE ROUTES
+    const val FAVORITE_ROUTE = "favorite_route"
+    const val FAVORITE_HOST_ROUTE = "favorite_host_route"
+
 }

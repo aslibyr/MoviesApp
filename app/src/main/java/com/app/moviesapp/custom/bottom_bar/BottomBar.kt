@@ -5,6 +5,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material3.Icon
@@ -59,11 +60,15 @@ fun BottomBar(
             route = ScreenRoutes.HOME_HOST_ROUTE
         ),
         BottomNavigationItem(
+            title = "Favorite",
+            icon = Icons.Filled.Favorite,
+            route = ScreenRoutes.FAVORITE_HOST_ROUTE
+        ),
+        BottomNavigationItem(
             title = "Search",
             icon = Icons.Filled.Search,
             route = ScreenRoutes.SEARCH_HOST_ROUTE
         ),
-
         )
 
 
