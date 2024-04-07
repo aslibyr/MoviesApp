@@ -33,3 +33,13 @@ fun MovieDetailUIModel.toFavoriteMovieEntity(): FavoriteMovieEntity {
         duration = "${this.duration} min.",
     )
 }
+
+fun FavoriteMovieEntity.toUIModel(): MovieDetailUIModel {
+    return MovieDetailUIModel(
+        title = this.title,
+        overview = this.overview,
+        movieId = this.movieId,
+        duration = "${this.duration} min.",
+        isFavorite = true
+    )
+}

@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.app.moviesapp.custom.navigation.graphs.favoriteGraph
 import com.app.moviesapp.custom.navigation.graphs.homeGraph
 import com.app.moviesapp.custom.navigation.graphs.searchGraph
 import com.app.moviesapp.utils.ScreenRoutes
@@ -26,5 +27,6 @@ fun MainNavigation(
         ) {
         homeGraph(navController, shouldBottomBarVisible = {})
         searchGraph(navController)
+        favoriteGraph(navController)
     }
 }

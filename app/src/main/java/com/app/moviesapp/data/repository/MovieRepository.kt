@@ -45,7 +45,7 @@ class MovieRepository @Inject constructor(
         }
     }
 
-    suspend fun addMovieToFavorite(movie : MovieDetailUIModel ) : ResultWrapperLocal<MovieDetailUIModel> {
+    suspend fun addMovieToFavorite(movie: MovieDetailUIModel): ResultWrapperLocal<MovieDetailUIModel> {
         return try {
             appDataBase.favoriteMovies().insertFavoriteMovie(movie.toFavoriteMovieEntity())
             val newMovieDetailData = MovieDetailUIModel(
@@ -56,12 +56,12 @@ class MovieRepository @Inject constructor(
                 isFavorite = true
             )
             ResultWrapperLocal.Success(newMovieDetailData)
-        } catch (e:Exception) {
+        } catch (e: Exception) {
             ResultWrapperLocal.Error(e.message ?: "")
         }
     }
 
-     fun removeMovieFromFavorite(movie : MovieDetailUIModel ) : ResultWrapperLocal<MovieDetailUIModel> {
+    fun removeMovieFromFavorite(movie: MovieDetailUIModel): ResultWrapperLocal<MovieDetailUIModel> {
         return try {
             appDataBase.favoriteMovies().removeFavoriteMovie(movie.movieId)
             val newMovieDetailData = MovieDetailUIModel(
@@ -72,9 +72,21 @@ class MovieRepository @Inject constructor(
                 isFavorite = false
             )
             ResultWrapperLocal.Success(newMovieDetailData)
-        } catch (e:Exception) {
+        } catch (e: Exception) {
             ResultWrapperLocal.Error(e.message ?: "")
         }
     }
 
+    fun getFavoriteMovies(): Flow<ResultWrapperLocal<List<MovieDetailUIModel>>> {
+        return flow {
+            try {
+                val favoriteMovies = appDataBase.favoriteMovies().getFavoriteMovies().map {
+                    it.toUIModel()
+                }
+                emit(ResultWrapperLocal.Success(favoriteMovies))
+            } catch (e: Exception) {
+                emit(ResultWrapperLocal.Error(e.message ?: ""))
+            }
+        }
+    }
 }
