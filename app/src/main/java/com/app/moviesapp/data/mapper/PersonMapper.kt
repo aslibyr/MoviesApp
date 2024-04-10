@@ -18,8 +18,17 @@ fun PersonResponse.PersonUIModel(isFavorite: Boolean): PersonUIModel {
 
 fun PersonUIModel.toFavoritePersonEntity(): FavoritePersonEntity {
     return FavoritePersonEntity(
-        personId = this.personId.toString(),
+        personId = this.personId,
         name = this.name,
         profilePath = this.profilePath
+    )
+}
+
+fun FavoritePersonEntity.toUIModel(): PersonUIModel {
+    return PersonUIModel(
+        profilePath = this.profilePath,
+        personId = this.personId,
+        name = this.name,
+        isFavorite = true
     )
 }
