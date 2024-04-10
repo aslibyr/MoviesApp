@@ -11,6 +11,7 @@ import com.app.moviesapp.utils.safeApiCall
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class MovieRepository @Inject constructor(
@@ -79,13 +80,12 @@ class MovieRepository @Inject constructor(
 
     fun getFavoriteMovies(): Flow<ResultWrapperLocal<List<MovieDetailUIModel>>> {
         return flow {
-            try {
-                val favoriteMovies = appDataBase.favoriteMovies().getFavoriteMovies().map {
+            appDataBase.favoriteMovies().getFavoriteMovies().map { list ->
+                list.map {
                     it.toUIModel()
                 }
-                emit(ResultWrapperLocal.Success(favoriteMovies))
-            } catch (e: Exception) {
-                emit(ResultWrapperLocal.Error(e.message ?: ""))
+            }.collect {
+                emit(ResultWrapperLocal.Success(it))
             }
         }
     }
