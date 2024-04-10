@@ -8,5 +8,5 @@ data class FavoritePersonEntity(
     @PrimaryKey
     val name: String = "",
     val profilePath: String = "",
-    val personId: String = ""
+    val personId: Int = 0
 )

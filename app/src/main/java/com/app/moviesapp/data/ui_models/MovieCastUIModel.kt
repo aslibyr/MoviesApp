@@ -4,5 +4,5 @@ data class MovieCastUIModel(
     val castName: String = "",
     val character: String = "",
     val profilePath: String = "",
-    val personId: Int = 0
+    val personId: String = ""
 )
