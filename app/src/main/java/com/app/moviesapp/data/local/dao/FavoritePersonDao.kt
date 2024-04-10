@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.app.moviesapp.data.local.entity.FavoritePersonEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FavoritePersonDao {
@@ -15,7 +16,7 @@ interface FavoritePersonDao {
     fun getFavoritePerson(personId: String): FavoritePersonEntity?
 
     @Query("SELECT * FROM favorite_persons")
-    fun getFavoritePersons(): List<FavoritePersonEntity>
+    fun getFavoritePersons(): Flow<List<FavoritePersonEntity>>
 
     @Query("DELETE FROM favorite_persons Where personId = :personId")
     fun removeFavoritePerson(personId: Int)

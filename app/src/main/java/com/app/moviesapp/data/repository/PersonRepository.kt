@@ -7,6 +7,7 @@ import com.app.moviesapp.data.ui_models.PersonUIModel
 import com.app.moviesapp.utils.ResultWrapperLocal
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class PersonRepository @Inject constructor(
@@ -46,16 +47,18 @@ class PersonRepository @Inject constructor(
         return appDataBase.favoritePerson().getFavoritePerson(personId) != null
     }
 
-    fun getFavoritePersons(): Flow<ResultWrapperLocal<List<PersonUIModel>>> {
-        return flow {
-            try {
-                val favoritePerson = appDataBase.favoritePerson().getFavoritePersons().map {
+    fun getFavoritePersons(): Flow<ResultWrapperLocal<List<PersonUIModel>>> =
+        flow {
+            appDataBase.favoritePerson().getFavoritePersons().map { list ->
+                list.map {
                     it.toUIModel()
                 }
-                emit(ResultWrapperLocal.Success(favoritePerson))
-            } catch (e: Exception) {
-                emit(ResultWrapperLocal.Error(e.message ?: ""))
+
+            }.collect {
+                emit(ResultWrapperLocal.Success(it))
             }
+
+
         }
-    }
+
 }
