@@ -41,5 +41,4 @@ class FavoriteMoviesViewModel @Inject constructor(
             }
         }
     }
-
 }

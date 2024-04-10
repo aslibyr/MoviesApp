@@ -8,7 +8,7 @@ import com.app.moviesapp.data.local.entity.FavoriteMovieEntity
 import com.app.moviesapp.data.local.entity.FavoritePersonEntity
 
 
-@Database(entities = [FavoriteMovieEntity::class, FavoritePersonEntity::class], version = 1)
+@Database(entities = [FavoriteMovieEntity::class, FavoritePersonEntity::class], version = 2)
 abstract class MoviesAppDataBase : RoomDatabase() {
     abstract fun favoriteMovies(): FavoriteMoviesDao
     abstract fun favoritePerson(): FavoritePersonDao
