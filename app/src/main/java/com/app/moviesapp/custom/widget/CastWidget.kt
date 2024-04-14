@@ -23,10 +23,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
+import com.app.moviesapp.custom.image.MoviesImageView
 
 @Composable
 fun CastWidget(
@@ -87,12 +86,8 @@ fun CastWidgetItem(
             shape = RoundedCornerShape(15.dp),
             colors = CardDefaults.cardColors(containerColor = Color.White)
         ) {
-            AsyncImage(
-                modifier = Modifier.size(150.dp),
-                model = cast.profilePath,
-                contentDescription = "",
-                contentScale = ContentScale.Crop
-            )
+            MoviesImageView(imageUrl = cast.profilePath, modifier = Modifier.size(150.dp))
+
             Text(
                 modifier = Modifier.padding(start = 8.dp, bottom = 4.dp, top = 4.dp),
                 text = cast.castName,

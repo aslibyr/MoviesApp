@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,12 +18,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.compose.SubcomposeAsyncImage
+import com.app.moviesapp.custom.image.MoviesImageView
 import com.app.moviesapp.custom.loading.LoadingDialog
 import com.app.moviesapp.data.ui_models.MovieCastUIModel
 
@@ -62,7 +60,7 @@ fun CastListItem(cast: MovieCastUIModel, openPersonScreen: (String) -> Unit) {
             .height(180.dp)
             .padding(8.dp)
             .clickable {
-                openPersonScreen(cast.personId.toString())
+                openPersonScreen(cast.personId)
             }
     ) {
         Row(
@@ -71,13 +69,7 @@ fun CastListItem(cast: MovieCastUIModel, openPersonScreen: (String) -> Unit) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            SubcomposeAsyncImage(
-                modifier = Modifier
-                    .aspectRatio(1f),
-                model = cast.profilePath,
-                contentDescription = cast.castName,
-                contentScale = ContentScale.Crop,
-            )
+            MoviesImageView(imageUrl = cast.profilePath, modifier = Modifier)
             Column {
                 Text(text = cast.castName)
                 Text(text = cast.character)

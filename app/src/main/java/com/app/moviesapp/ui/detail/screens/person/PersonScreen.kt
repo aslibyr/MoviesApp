@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.compose.SubcomposeAsyncImage
+import com.app.moviesapp.custom.image.MoviesImageView
 import com.app.moviesapp.custom.indicator.PagerIndicator
 import com.app.moviesapp.custom.popup.CustomImagePopUp
 import com.app.moviesapp.data.ui_models.PersonUIModel
@@ -109,18 +109,12 @@ fun PersonScreenUI(
             HorizontalPager(state = pagerState) { page ->
                 val currentImage = images.getOrNull(page)
                 if (currentImage != null) {
-                    SubcomposeAsyncImage(
-                        modifier = Modifier
+                    MoviesImageView(
+                        imageUrl = currentImage, modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
                                 showImagePopup = true
-                            },
-                        model = currentImage,
-                        contentDescription = "",
-                        contentScale = ContentScale.FillWidth,
-                        loading = {
-                            CircularProgressIndicator()
-                        }
+                            }, contentScale = ContentScale.FillWidth
                     )
                 }
             }

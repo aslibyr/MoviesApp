@@ -18,24 +18,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.compose.AsyncImage
 import com.app.moviesapp.R
 import com.app.moviesapp.base.BasePagingResponse
+import com.app.moviesapp.custom.image.MoviesImageView
 import com.app.moviesapp.custom.indicator.PagerIndicator
 import com.app.moviesapp.custom.navigation.graphs.MovieListType
 import com.app.moviesapp.custom.widget.MovieWidget
 import com.app.moviesapp.custom.widget.MovieWidgetComponentModel
 import com.app.moviesapp.data.mapper.MovieWidgetModel
 import com.app.moviesapp.data.response.MovieResponse
-import com.app.moviesapp.utils.Constant
 import com.app.moviesapp.utils.ResultWrapper
-import com.app.moviesapp.utils.ScreenRoutes
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -89,18 +86,15 @@ fun HomeScreen(
                             .fillMaxSize()
                     ) {
                         val url = response.results[it].getImagePath()
-                        AsyncImage(
-                            model = url,
-                            contentDescription = "",
+                        MoviesImageView(
+                            imageUrl = url,
                             modifier = Modifier
                                 .fillMaxSize()
                                 .clickable {
                                     onMovieClick(
                                         response.results[it].id.toString()
                                     )
-                                },
-                            contentScale = ContentScale.Crop
-                        )
+                                })
                     }
                     Box(
                         modifier = Modifier
