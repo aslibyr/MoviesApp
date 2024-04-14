@@ -24,7 +24,7 @@ import com.app.moviesapp.ui.favorite.screens.movies.FavoriteMoviesScreen
 import com.app.moviesapp.ui.favorite.screens.people.FavoritePeopleScreen
 
 @Composable
-fun FavoriteScreen() {
+fun FavoriteScreen(onMovieClick: (String) -> Unit, onPersonClick: (String) -> Unit) {
     var selectedTabIndex by rememberSaveable {
         mutableStateOf(0)
     }
@@ -82,7 +82,7 @@ fun FavoriteScreen() {
         }
         when (selectedTabIndex) {
             0 -> {
-                FavoriteMoviesScreen()
+                FavoriteMoviesScreen(onMovieClick = onMovieClick)
             }
 
             1 -> {

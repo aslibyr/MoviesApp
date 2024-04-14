@@ -22,5 +22,10 @@ object ScreenRoutes {
     //FAVORITE ROUTES
     const val FAVORITE_ROUTE = "favorite_route"
     const val FAVORITE_HOST_ROUTE = "favorite_host_route"
+    const val FAVORITE_MOVIE_DETAIL_ROUTE = "favorite_movie_detail_route/{id}"
+    const val FAVORITE_LIST_ROUTE = "favorite_list_route/{type}?movie_id={movie_id}"
+    const val FAVORITE_MOVIE_CAST_ROUTE = "favorite_movie_cast_route?movie_id={movie_id}"
+    const val FAVORITE_PERSON_ROUTE = "favorite_person_route/{person_id}"
+
 
 }

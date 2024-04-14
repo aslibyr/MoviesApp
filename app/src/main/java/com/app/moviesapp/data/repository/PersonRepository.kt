@@ -57,8 +57,6 @@ class PersonRepository @Inject constructor(
             }.collect {
                 emit(ResultWrapperLocal.Success(it))
             }
-
-
         }
 
 }
