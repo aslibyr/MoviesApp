@@ -86,7 +86,7 @@ fun FavoriteScreen(onMovieClick: (String) -> Unit, onPersonClick: (String) -> Un
             }
 
             1 -> {
-                FavoritePeopleScreen()
+                FavoritePeopleScreen(onPersonClick = onPersonClick)
             }
         }
     }
