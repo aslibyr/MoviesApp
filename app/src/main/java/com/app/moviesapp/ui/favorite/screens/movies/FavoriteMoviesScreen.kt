@@ -39,7 +39,7 @@ fun FavoriteMoviesScreen(
     val listState = rememberLazyGridState()
     val scope = rememberCoroutineScope()
     val isScrollButtonVisible by remember {
-        derivedStateOf { listState.firstVisibleItemIndex >= 3 }
+        derivedStateOf { listState.firstVisibleItemIndex >= 2 }
     }
 
     Box(

@@ -101,6 +101,7 @@ fun NavGraphBuilder.favoriteGraph(
         ) {
             PersonScreen()
         }
+
     }
 
 }
