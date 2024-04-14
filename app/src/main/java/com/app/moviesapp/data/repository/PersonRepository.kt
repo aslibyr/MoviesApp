@@ -20,6 +20,7 @@ class PersonRepository @Inject constructor(
                 personId = person.personId,
                 name = person.name,
                 profilePath = person.profilePath,
+                biography = person.biography,
                 isFavorite = true
             )
             ResultWrapperLocal.Success(newPersonData)
@@ -35,6 +36,7 @@ class PersonRepository @Inject constructor(
                 personId = person.personId,
                 name = person.name,
                 profilePath = person.profilePath,
+                biography = person.biography,
                 isFavorite = false
             )
             ResultWrapperLocal.Success(newPersonDetailData)

@@ -7,10 +7,8 @@ import com.app.moviesapp.data.ui_models.PersonUIModel
 fun PersonResponse.PersonUIModel(isFavorite: Boolean): PersonUIModel {
     return PersonUIModel(
         personId = this.id ?: 0,
-        birthday = this.birthday ?: "",
         biography = this.biography ?: "",
         name = this.name ?: "",
-        placeOfBirth = this.place_of_birth ?: "",
         profilePath = this.getImagePath(),
         isFavorite = isFavorite
     )
@@ -20,7 +18,7 @@ fun PersonUIModel.toFavoritePersonEntity(): FavoritePersonEntity {
     return FavoritePersonEntity(
         personId = this.personId,
         name = this.name,
-        profilePath = this.profilePath
+        profilePath = this.profilePath,
     )
 }
 
