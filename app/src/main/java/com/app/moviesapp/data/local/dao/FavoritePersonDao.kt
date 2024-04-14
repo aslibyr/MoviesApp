@@ -13,7 +13,7 @@ interface FavoritePersonDao {
     suspend fun insertFavoritePerson(personEntity: FavoritePersonEntity)
 
     @Query("SELECT * FROM favorite_persons WHERE personId = :personId")
-    fun getFavoritePerson(personId: String): FavoritePersonEntity?
+    fun getFavoritePerson(personId: Int): FavoritePersonEntity?
 
     @Query("SELECT * FROM favorite_persons")
     fun getFavoritePersons(): Flow<List<FavoritePersonEntity>>

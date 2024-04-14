@@ -4,4 +4,5 @@ import com.app.moviesapp.data.ui_models.MovieDetailUIModel
 
 data class FavoriteMoviesUIStateModel(
     val favMovies: List<MovieDetailUIModel> = emptyList(),
+    val isRemoved: Boolean = false
 )

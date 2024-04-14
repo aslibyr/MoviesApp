@@ -45,7 +45,7 @@ class PersonRepository @Inject constructor(
         }
     }
 
-    fun isFavorite(personId: String): Boolean {
+    fun isFavorite(personId: Int): Boolean {
         return appDataBase.favoritePerson().getFavoritePerson(personId) != null
     }
 
