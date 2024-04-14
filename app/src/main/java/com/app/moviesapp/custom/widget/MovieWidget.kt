@@ -17,7 +17,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,10 +24,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil.compose.SubcomposeAsyncImage
+import com.app.moviesapp.R
+import com.app.moviesapp.custom.image.MoviesImageView
 
 @Composable
 fun MovieWidget(
@@ -86,17 +85,13 @@ fun MovieWidgetItem(movie: MovieWidgetModel, onMovieClick: (String) -> Unit) {
             shape = RoundedCornerShape(15.dp),
             colors = CardDefaults.cardColors(containerColor = Color.White)
         ) {
-            SubcomposeAsyncImage(
-                modifier = Modifier
+            MoviesImageView(
+                imageUrl = movie.movieImage, modifier = Modifier
                     .height(250.dp)
                     .width(180.dp),
-                model = movie.movieImage,
-                contentDescription = "",
-                contentScale = ContentScale.Crop,
-                loading = {
-                    CircularProgressIndicator()
-                }
+                errorResource = R.drawable.movie_error_placeholder
             )
+
             Text(
                 modifier = Modifier.padding(8.dp),
                 text = movie.movieName,

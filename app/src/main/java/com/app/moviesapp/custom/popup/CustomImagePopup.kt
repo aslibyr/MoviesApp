@@ -15,15 +15,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogWindowProvider
-import coil.compose.SubcomposeAsyncImage
 import com.app.coins.utils.heightPercent
 import com.app.coins.utils.noRippleClick
+import com.app.moviesapp.custom.image.MoviesImageView
 
 @Composable
 fun CustomImagePopUp(
@@ -59,15 +58,8 @@ fun CustomImagePopUp(
                     .heightPercent(0.50f, configuration = configuration),
                 shape = RoundedCornerShape(5.dp)
             ) {
-                SubcomposeAsyncImage(
-                    model = image,
-                    modifier = modifier.fillMaxSize(),
-                    contentDescription = "",
-                    contentScale = ContentScale.Crop
-                )
+                MoviesImageView(imageUrl = image, modifier = Modifier.fillMaxSize())
             }
-
         }
-
     }
 }

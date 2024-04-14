@@ -135,7 +135,6 @@ fun MovieDetailUI(
                     openMovieListScreen(MovieListType.SIMILAR.type, movie.movieId)
                 },
                 onMovieClick = { route ->
-
                     openMovieDetail(route)
                 })
         }
