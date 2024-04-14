@@ -65,7 +65,7 @@ class PersonScreenViewModel @Inject constructor(
 
                 is ResultWrapper.Success -> {
                     _uiState.update {
-                        val isFavorite = repository.isFavorite(personId)
+                        val isFavorite = repository.isFavorite(personId.toInt())
                         it.copy(
                             personData = response.value.PersonUIModel(isFavorite),
                             isLoading = false,

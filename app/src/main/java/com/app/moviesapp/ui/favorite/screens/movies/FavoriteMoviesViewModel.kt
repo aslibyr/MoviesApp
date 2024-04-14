@@ -4,6 +4,7 @@ package com.app.moviesapp.ui.favorite.screens.movies
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.moviesapp.data.repository.MovieRepository
+import com.app.moviesapp.data.ui_models.MovieDetailUIModel
 import com.app.moviesapp.utils.ResultWrapperLocal
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,8 +19,8 @@ class FavoriteMoviesViewModel @Inject constructor(
     private val movieRepository: MovieRepository,
 ) : ViewModel() {
 
-    private val _favoriteMoviesState = MutableStateFlow(FavoriteMoviesUIStateModel())
-    val uiState = _favoriteMoviesState.stateIn(
+    private val _uiState = MutableStateFlow(FavoriteMoviesUIStateModel())
+    val uiState = _uiState.stateIn(
         viewModelScope, SharingStarted.WhileSubscribed(),
         FavoriteMoviesUIStateModel()
     )
@@ -34,11 +35,26 @@ class FavoriteMoviesViewModel @Inject constructor(
                 when (it) {
                     is ResultWrapperLocal.Error -> {}
                     is ResultWrapperLocal.Success -> {
-                        _favoriteMoviesState.value =
-                            _favoriteMoviesState.value.copy(favMovies = it.value)
+                        _uiState.value =
+                            _uiState.value.copy(favMovies = it.value)
                     }
                 }
             }
         }
+    }
+
+    fun removeFromFavoriteMovie(model: MovieDetailUIModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            when (movieRepository.removeMovieFromFavorite(model)) {
+                is ResultWrapperLocal.Error -> {}
+                is ResultWrapperLocal.Success -> {
+                    _uiState.value = _uiState.value.copy(isRemoved = true)
+                }
+            }
+        }
+    }
+
+    fun toastMessageShowed() {
+        _uiState.value = _uiState.value.copy(isRemoved = false)
     }
 }
