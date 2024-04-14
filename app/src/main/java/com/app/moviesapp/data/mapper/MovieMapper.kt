@@ -32,7 +32,7 @@ fun MovieDetailUIModel.toFavoriteMovieEntity(): FavoriteMovieEntity {
         title = this.title ,
         overview = this.overview ,
         movieId = this.movieId,
-        duration = "${this.duration} min.",
+        duration = this.duration,
         movieImage = this.movieImage
     )
 }
@@ -42,7 +42,7 @@ fun FavoriteMovieEntity.toUIModel(): MovieDetailUIModel {
         title = this.title,
         overview = this.overview,
         movieId = this.movieId,
-        duration = "${this.duration} min.",
+        duration = this.duration,
         isFavorite = true,
         movieImage = this.movieImage,
     )
