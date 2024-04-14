@@ -5,6 +5,7 @@ import com.app.moviesapp.data.local.entity.FavoriteMovieEntity
 import com.app.moviesapp.data.response.MovieDetailResponse
 import com.app.moviesapp.data.response.MovieResponse
 import com.app.moviesapp.data.ui_models.MovieDetailUIModel
+import com.app.moviesapp.utils.Constant
 
 
 fun MovieResponse.MovieWidgetModel() : MovieWidgetModel {
@@ -21,7 +22,8 @@ fun MovieDetailResponse.toUIModel(isFavorite : Boolean): MovieDetailUIModel {
         overview = this.overview ?: "",
         movieId = this.id.toString(),
         duration = "${this.runtime} min.",
-        isFavorite = isFavorite
+        movieImage = Constant.BASE_POSTER_URL + this.poster_path,
+        isFavorite = isFavorite,
     )
 }
 
@@ -31,6 +33,7 @@ fun MovieDetailUIModel.toFavoriteMovieEntity(): FavoriteMovieEntity {
         overview = this.overview ,
         movieId = this.movieId,
         duration = "${this.duration} min.",
+        movieImage = this.movieImage
     )
 }
 
@@ -40,6 +43,7 @@ fun FavoriteMovieEntity.toUIModel(): MovieDetailUIModel {
         overview = this.overview,
         movieId = this.movieId,
         duration = "${this.duration} min.",
-        isFavorite = true
+        isFavorite = true,
+        movieImage = this.movieImage,
     )
 }
