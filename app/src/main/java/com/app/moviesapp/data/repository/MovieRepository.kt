@@ -5,6 +5,7 @@ import com.app.moviesapp.data.local.MoviesAppDataBase
 import com.app.moviesapp.data.mapper.toFavoriteMovieEntity
 import com.app.moviesapp.data.mapper.toUIModel
 import com.app.moviesapp.data.ui_models.MovieDetailUIModel
+import com.app.moviesapp.data.ui_models.MovieVideoUIModel
 import com.app.moviesapp.utils.ResultWrapper
 import com.app.moviesapp.utils.ResultWrapperLocal
 import com.app.moviesapp.utils.safeApiCall
@@ -86,6 +87,31 @@ class MovieRepository @Inject constructor(
                 }
             }.collect {
                 emit(ResultWrapperLocal.Success(it))
+            }
+        }
+    }
+
+    suspend fun getVideos(movieId: String): ResultWrapper<List<MovieVideoUIModel>> {
+        return when (val response = safeApiCall(Dispatchers.IO) {
+            webService.getVideos(movieId)
+        }) {
+            is ResultWrapper.GenericError -> {
+                ResultWrapper.GenericError()
+            }
+
+            ResultWrapper.Loading -> {
+                ResultWrapper.Loading
+            }
+
+            ResultWrapper.NetworkError -> {
+                ResultWrapper.NetworkError
+            }
+
+            is ResultWrapper.Success -> {
+                val data = response.value.results.filter {
+                    it.iso_639_1 == "en"
+                }
+                ResultWrapper.Success(data.map { it.toUIModel() })
             }
         }
     }
