@@ -10,6 +10,8 @@ object ScreenRoutes {
     const val HOME_MOVIE_DETAIL_ROUTE = "home_movie_detail_route/{id}"
     const val HOME_MOVIE_CAST_ROUTE = "home_movie_cast_route?movie_id={movie_id}"
     const val HOME_PERSON_ROUTE = "home_person_route/{person_id}"
+    const val HOME_VIDEO_ROUTE = "home_video_route/{movie_id}"
+
 
     //SEARCH ROUTES
     const val SEARCH_ROUTE = "search_route"
