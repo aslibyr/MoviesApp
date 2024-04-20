@@ -37,7 +37,6 @@ fun MovieListScreen(
     viewModel: MovieListScreenViewModel = hiltViewModel(),
     onMovieClick: (String) -> Unit
 ) {
-
     val movies: LazyPagingItems<MovieResponse> =
         viewModel.movies.collectAsLazyPagingItems()
 

@@ -5,6 +5,9 @@ import com.app.moviesapp.custom.widget.MovieWidgetModel
 import com.app.moviesapp.data.ui_models.MovieDetailUIModel
 import com.app.moviesapp.data.ui_models.MovieReviewsUIModel
 
+sealed class DetailScreenUIState {
+    data class UpdateTabIndex(val tabIndex: Int) : DetailScreenUIState()
+}
 data class MovieDetailUIStateModel(
     val images: List<String> = emptyList(),
     val movieDetailData: MovieDetailUIModel = MovieDetailUIModel(),
@@ -15,4 +18,5 @@ data class MovieDetailUIStateModel(
     val isLoading: Boolean = true,
     val errorMessage: String = "",
     val successCount: Int = 0,
+    val tabIndex: Int = 0,
 )
