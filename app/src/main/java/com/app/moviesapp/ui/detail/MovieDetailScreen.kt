@@ -36,9 +36,11 @@ import com.app.moviesapp.custom.widget.CastWidgetComponentModel
 import com.app.moviesapp.custom.widget.MovieWidgetModel
 import com.app.moviesapp.data.ui_models.MovieDetailUIModel
 import com.app.moviesapp.data.ui_models.MovieReviewsUIModel
+import com.app.moviesapp.data.ui_models.MovieVideoUIModel
 import com.app.moviesapp.ui.detail.components.MovieDetailPagerComponent
 import com.app.moviesapp.ui.detail.components.MovieDetailReviewsComponent
 import com.app.moviesapp.ui.detail.components.MovieDetailsComponent
+import com.app.moviesapp.ui.detail.screens.videos.MovieDetailVideoScreen
 import com.app.moviesapp.ui.favorite.TabItemModel
 import com.app.moviesapp.utils.theme.Pink40
 
@@ -86,6 +88,7 @@ fun DetailScreen(
                         viewModel.addMovieToFavorite(uiState.movieDetailData)
                     }
                 },
+                videos = uiState.videoData
             )
         }
     }
@@ -103,7 +106,8 @@ fun MovieDetailUI(
     openMovieDetail: (String) -> Unit,
     openCastScreen: (String) -> Unit,
     openPersonScreen: (String) -> Unit,
-    onFavoriteClicked: (Boolean) -> Unit
+    onFavoriteClicked: (Boolean) -> Unit,
+    videos: List<MovieVideoUIModel>
 
 ) {
     var tabIndex by remember {
@@ -157,6 +161,7 @@ fun MovieDetailUI(
             }
 
             2 -> {
+                MovieDetailVideoScreen(videos = videos)
             }
         }
     }
