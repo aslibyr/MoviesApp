@@ -11,18 +11,16 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForwardIos
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.app.moviesapp.custom.image.MoviesImageView
@@ -73,33 +71,34 @@ fun CastWidgetItem(
     cast: CastWidgetModel, openPersonScreen: (String) -> Unit
 ) {
     Column(
+        modifier = Modifier
+            .padding(8.dp)
+            .clickable {
+                openPersonScreen(cast.personId.toString())
+            },
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Card(
-            modifier = Modifier
-                .padding(8.dp)
-                .clickable {
-                    openPersonScreen(cast.personId.toString())
-                },
-            elevation = CardDefaults.cardElevation(5.dp),
-            shape = RoundedCornerShape(15.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.White)
-        ) {
-            MoviesImageView(imageUrl = cast.profilePath, modifier = Modifier.size(150.dp))
 
-            Text(
-                modifier = Modifier.padding(start = 8.dp, bottom = 4.dp, top = 4.dp),
-                text = cast.castName,
-                fontSize = 12.sp,
-                style = MaterialTheme.typography.bodyMedium
-            )
-            Text(
-                modifier = Modifier.padding(start = 8.dp, bottom = 4.dp),
-                text = cast.character,
-                fontSize = 10.sp,
-                style = MaterialTheme.typography.bodyMedium
-            )
-        }
+        MoviesImageView(
+            imageUrl = cast.profilePath, modifier = Modifier
+                .size(150.dp)
+                .clip(
+                    CircleShape
+                )
+        )
+
+        Text(
+            modifier = Modifier.padding(start = 8.dp, top = 4.dp),
+            text = cast.castName,
+            fontSize = 12.sp,
+            style = MaterialTheme.typography.bodyMedium
+        )
+        Text(
+            modifier = Modifier.padding(start = 8.dp, bottom = 4.dp),
+            text = cast.character,
+            fontSize = 10.sp,
+            style = MaterialTheme.typography.bodyMedium
+        )
     }
 }

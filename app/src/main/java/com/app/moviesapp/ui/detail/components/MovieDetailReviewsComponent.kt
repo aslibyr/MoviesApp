@@ -26,7 +26,6 @@ import com.app.moviesapp.data.ui_models.MovieReviewsUIModel
 fun MovieDetailReviewsComponent(
     reviews: List<MovieReviewsUIModel>
 ) {
-
     AnimatedVisibility(visible = reviews.isNotEmpty()) {
         Column(Modifier.fillMaxWidth()) {
             reviews.forEach { review ->
@@ -67,15 +66,20 @@ fun MovieReviewItem(
                 Text(text = review.rating)
             }
         }
+        if (!review.review.contains("null") || !review.review.contains("<") || !review.review.contains(
+                ">"
+            ) || !review.review.contains("/") || !review.review.contains("*")
+        ) {
+            Text(
+                modifier = Modifier
+                    .padding(horizontal = 6.dp)
+                    .padding(bottom = 6.dp),
+                text = review.review,
+                maxLines = if (isExpanded) Int.MAX_VALUE else 3,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
 
-        Text(
-            modifier = Modifier
-                .padding(horizontal = 6.dp)
-                .padding(bottom = 6.dp),
-            text = review.review,
-            maxLines = if (isExpanded) Int.MAX_VALUE else 3,
-            overflow = TextOverflow.Ellipsis
-        )
         if (!isExpanded) {
             Text(
                 text = "Daha fazla göster",

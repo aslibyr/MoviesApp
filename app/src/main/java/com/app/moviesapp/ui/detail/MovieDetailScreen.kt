@@ -49,6 +49,7 @@ import com.app.moviesapp.utils.theme.Pink40
 @Composable
 fun DetailScreen(
     viewModel: MovieDetailScreenViewModel = hiltViewModel(), onBackClick: () -> Unit,
+    openMovieListScreen: (String, String) -> Unit,
     openMovieDetail: (String) -> Unit,
     openCastScreen: (String) -> Unit,
     openPersonScreen: (String) -> Unit
