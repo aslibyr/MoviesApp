@@ -63,7 +63,7 @@ fun MovieDetailPagerComponent(
             "",
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .size(38.dp)
+                .size(42.dp)
                 .padding(start = 16.dp, top = 16.dp)
                 .clickable {
                     onBackClick()
@@ -77,7 +77,7 @@ fun MovieDetailPagerComponent(
             "",
             modifier = Modifier
                 .align(Alignment.TopEnd)
-                .size(38.dp)
+                .size(42.dp)
                 .padding(end = 16.dp, top = 16.dp)
                 .clickable {
                     onFavoriteClicked(isFavorite)

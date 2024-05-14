@@ -55,6 +55,8 @@ class MovieRepository @Inject constructor(
                 overview = movie.overview,
                 movieId = movie.movieId,
                 duration = movie.duration,
+                voteAvg = movie.voteAvg,
+                releaseDate = movie.releaseDate,
                 isFavorite = true
             )
             ResultWrapperLocal.Success(newMovieDetailData)
@@ -71,7 +73,9 @@ class MovieRepository @Inject constructor(
                 overview = movie.overview,
                 movieId = movie.movieId,
                 duration = movie.duration,
-                isFavorite = false
+                isFavorite = false,
+                voteAvg = movie.voteAvg,
+                releaseDate = movie.releaseDate
             )
             ResultWrapperLocal.Success(newMovieDetailData)
         } catch (e: Exception) {

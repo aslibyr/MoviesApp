@@ -7,14 +7,19 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -26,7 +31,6 @@ import com.app.moviesapp.data.ui_models.MovieReviewsUIModel
 fun MovieDetailReviewsComponent(
     reviews: List<MovieReviewsUIModel>
 ) {
-
     AnimatedVisibility(visible = reviews.isNotEmpty()) {
         Column(Modifier.fillMaxWidth()) {
             reviews.forEach { review ->
@@ -64,21 +68,35 @@ fun MovieReviewItem(
             )
 
             if (!review.rating.contains("null")) {
-                Text(text = review.rating)
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = Icons.Filled.Star,
+                        contentDescription = "Rating",
+                        modifier = Modifier.size(16.dp),
+                        tint = Color.White
+                    )
+                    Text(text = review.rating, Modifier.padding(start = 4.dp))
+                }
             }
+
+        }
+        if (!review.review.contains("null") || !review.review.contains("<") || !review.review.contains(
+                ">"
+            ) || !review.review.contains("/") || !review.review.contains("*")
+        ) {
+            Text(
+                modifier = Modifier
+                    .padding(horizontal = 6.dp)
+                    .padding(bottom = 6.dp),
+                text = review.review,
+                maxLines = if (isExpanded) Int.MAX_VALUE else 3,
+                overflow = TextOverflow.Ellipsis
+            )
         }
 
-        Text(
-            modifier = Modifier
-                .padding(horizontal = 6.dp)
-                .padding(bottom = 6.dp),
-            text = review.review,
-            maxLines = if (isExpanded) Int.MAX_VALUE else 3,
-            overflow = TextOverflow.Ellipsis
-        )
         if (!isExpanded) {
             Text(
-                text = "Daha fazla göster",
+                text = "Show more",
                 modifier = Modifier
                     .padding(6.dp)
                     .clickable { isExpanded = true },

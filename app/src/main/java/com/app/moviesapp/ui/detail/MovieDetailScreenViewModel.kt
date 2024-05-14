@@ -41,6 +41,7 @@ class MovieDetailScreenViewModel @Inject constructor(
         getMovieSimilar(id = id)
         getMovieReviews(id = id)
         getImages(id = id)
+        getVideos(movieId = id)
     }
 
 
@@ -297,6 +298,21 @@ class MovieDetailScreenViewModel @Inject constructor(
                 }
                 is ResultWrapperLocal.Success -> {
                     _uiState.value = _uiState.value.copy(movieDetailData = result.value)                }
+            }
+        }
+    }
+
+    private fun getVideos(movieId: String) {
+        viewModelScope.launch() {
+            when (val response = movieRepository.getVideos(movieId)
+            ) {
+                is ResultWrapper.GenericError -> {}
+                ResultWrapper.Loading -> {}
+                ResultWrapper.NetworkError -> {}
+                is ResultWrapper.Success -> {
+                    val videos = response.value
+                    _uiState.value = _uiState.value.copy(videoData = videos, isLoading = false)
+                }
             }
         }
     }
