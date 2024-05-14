@@ -9,7 +9,6 @@ import androidx.navigation.navigation
 import com.app.moviesapp.ui.detail.DetailScreen
 import com.app.moviesapp.ui.detail.screens.cast.MovieCastScreen
 import com.app.moviesapp.ui.detail.screens.person.PersonScreen
-import com.app.moviesapp.ui.detail.screens.videos.MovieDetailVideoScreen
 import com.app.moviesapp.ui.home.HomeScreen
 import com.app.moviesapp.ui.movie_list.MovieListScreen
 import com.app.moviesapp.utils.Constant
@@ -124,22 +123,6 @@ fun NavGraphBuilder.homeGraph(
             })
         ) {
             PersonScreen(onBackClick = { navController.popBackStack() })
-        }
-        composable(
-            route = ScreenRoutes.HOME_VIDEO_ROUTE,
-            arguments = listOf(navArgument("movie_id") {
-                type = NavType.StringType
-            })
-        ) {
-            MovieDetailVideoScreen()
-        }
-        composable(
-            route = ScreenRoutes.HOME_VIDEO_ROUTE,
-            arguments = listOf(navArgument("movie_id") {
-                type = NavType.StringType
-            })
-        ) {
-            MovieDetailVideoScreen()
         }
     }
 }
