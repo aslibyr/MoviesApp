@@ -133,6 +133,14 @@ fun NavGraphBuilder.homeGraph(
         ) {
             MovieDetailVideoScreen()
         }
+        composable(
+            route = ScreenRoutes.HOME_VIDEO_ROUTE,
+            arguments = listOf(navArgument("movie_id") {
+                type = NavType.StringType
+            })
+        ) {
+            MovieDetailVideoScreen()
+        }
     }
 }
 
