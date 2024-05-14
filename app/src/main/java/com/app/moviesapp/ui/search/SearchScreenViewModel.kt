@@ -75,10 +75,8 @@ class SearchScreenViewModel @Inject constructor(
                     }
                 }
             }
-
         }
     }
-
 }
 
 data class SearchUIStateModel(

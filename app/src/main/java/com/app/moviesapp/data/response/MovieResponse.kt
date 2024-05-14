@@ -15,12 +15,12 @@ data class MovieResponse(
     val overview: String,
     val popularity: Float,
     val poster_path: String? = null,
-    val release_date: String ?,
+    val release_date: String? = null,
     val title: String,
     val video: Boolean,
-    val vote_average: Double,
+    val vote_average: String? = null,
     val vote_count: Int
-): Parcelable{
+) : Parcelable {
     fun getImagePath(): String {
         return Constant.BASE_POSTER_URL + poster_path
     }

@@ -62,7 +62,7 @@ data class MovieDetailResponse(
 	val release_date: String? = null,
 
 	@Json(name="vote_average")
-	val vote_average: Double? = null,
+    val vote_average: String? = null,
 
 	@Json(name="belongs_to_collection")
 	val belongs_to_collection: BelongsToCollection? = null,

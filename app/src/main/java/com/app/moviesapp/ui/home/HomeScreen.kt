@@ -108,9 +108,6 @@ fun HomeScreen(
                         )
                     }
                 }
-
-
-
                 MovieWidget(
                     model = MovieWidgetComponentModel(
                         widgetCategory = "Now Playing",

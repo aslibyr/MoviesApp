@@ -6,7 +6,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -32,8 +35,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.compose.AsyncImage
 import com.app.moviesapp.custom.buttons.ListResetButton
+import com.app.moviesapp.custom.image.MoviesImageView
 import com.app.moviesapp.data.ui_models.PersonUIModel
 import kotlinx.coroutines.launch
 
@@ -51,7 +54,7 @@ fun FavoritePeopleScreen(
     }
     val context = LocalContext.current
     if (uiState.isRemoved) {
-        Toast.makeText(context, "Favorilerden kaldırıldı", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Removed from favorites.", Toast.LENGTH_SHORT).show()
         viewModel.toastMessageShowed()
     }
 
@@ -59,7 +62,7 @@ fun FavoritePeopleScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(
-                MaterialTheme.colorScheme.onPrimary
+                MaterialTheme.colorScheme.background
             )
     ) {
         LazyVerticalGrid(columns = GridCells.Fixed(2), state = listState) {
@@ -94,7 +97,7 @@ fun FavoritePersonListItem(
         Column(
             modifier = Modifier
                 .padding(8.dp)
-                .clip(RoundedCornerShape(topEnd = 20.dp, topStart = 20.dp))
+                .clip(RoundedCornerShape(20.dp))
                 .clickable {
                     onPersonClick(
                         person.personId.toString()
@@ -103,11 +106,25 @@ fun FavoritePersonListItem(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            AsyncImage(model = person.profilePath, contentDescription = "")
-            Text(
-                text = person.name,
-                style = MaterialTheme.typography.bodyMedium
-            )
+            Box(
+                modifier = Modifier
+                    .aspectRatio(1f),
+                contentAlignment = Alignment.BottomCenter
+            ) {
+                MoviesImageView(imageUrl = person.profilePath, modifier = Modifier.fillMaxSize())
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(color = Color.Black.copy(alpha = 0.5f))
+                        .padding(4.dp)
+                ) {
+                    Text(
+                        text = person.name,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.White
+                    )
+                }
+            }
         }
         Icon(
             modifier = Modifier

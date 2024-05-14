@@ -123,7 +123,15 @@ fun NavGraphBuilder.homeGraph(
                 type = NavType.StringType
             })
         ) {
-            PersonScreen()
+            PersonScreen(onBackClick = { navController.popBackStack() })
+        }
+        composable(
+            route = ScreenRoutes.HOME_VIDEO_ROUTE,
+            arguments = listOf(navArgument("movie_id") {
+                type = NavType.StringType
+            })
+        ) {
+            MovieDetailVideoScreen()
         }
         composable(
             route = ScreenRoutes.HOME_VIDEO_ROUTE,

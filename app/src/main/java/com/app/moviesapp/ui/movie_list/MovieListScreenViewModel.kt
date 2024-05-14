@@ -44,7 +44,6 @@ class MovieListScreenViewModel @Inject constructor(
                     }
                 }
 
-
                 MovieListType.TOP_RATED.type -> {
                     Pager(PagingConfig(pageSize = 20)) {
                         MoviePagingSource(webService, MovieListType.TOP_RATED)
