@@ -1,5 +1,6 @@
 package com.app.moviesapp.ui.detail.screens.videos
 
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
@@ -42,4 +43,5 @@ fun YoutubeScreen(
         )
         view
     }, modifier = modifier)
+
 }
