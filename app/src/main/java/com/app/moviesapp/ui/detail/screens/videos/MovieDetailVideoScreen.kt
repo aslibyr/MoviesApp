@@ -14,7 +14,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 @Composable
 fun MovieDetailVideoScreen(videos: List<MovieVideoUIModel>) {
 
-    videos.take(2).forEach {
+    videos.take(5).forEach {
         Column {
             YoutubeScreen(
                 videoId = it.url,

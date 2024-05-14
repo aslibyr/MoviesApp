@@ -4,7 +4,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -15,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
@@ -26,10 +24,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.app.moviesapp.custom.image.MoviesImageView
+import com.app.moviesapp.custom.loading.LoadingDialog
 import com.app.moviesapp.custom.tab.CustomTab
 import com.app.moviesapp.custom.tab.getTabList
 import com.app.moviesapp.custom.widget.CastWidget
@@ -43,7 +43,6 @@ import com.app.moviesapp.ui.detail.components.MovieDetailReviewsComponent
 import com.app.moviesapp.ui.detail.components.MovieDetailsComponent
 import com.app.moviesapp.ui.detail.screens.videos.MovieDetailVideoScreen
 import com.app.moviesapp.ui.favorite.TabItemModel
-import com.app.moviesapp.utils.theme.Pink40
 
 
 @Composable
@@ -57,9 +56,7 @@ fun DetailScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     if (uiState.isLoading) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            CircularProgressIndicator()
-        }
+        LoadingDialog()
     }
     Column(
         modifier = Modifier
@@ -129,7 +126,9 @@ fun MovieDetailUI(
         MovieDetailsComponent(
             title = movie.title,
             overview = movie.overview,
-            duration = movie.duration
+            duration = movie.duration,
+            movie = movie,
+            releaseDate = movie.releaseDate
         )
         CastWidget(
             model = castModel, openCastListScreen = {
@@ -143,7 +142,7 @@ fun MovieDetailUI(
                 Divider(
                     modifier = Modifier
                         .tabIndicatorOffset(it[tabIndex])
-                        .border(BorderStroke(2.dp, Pink40))
+                        .border(BorderStroke(2.dp, Color.White))
                 )
             }) {
             tabItems.forEachIndexed { index, item ->

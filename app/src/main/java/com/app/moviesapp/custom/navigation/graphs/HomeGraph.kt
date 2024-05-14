@@ -122,7 +122,7 @@ fun NavGraphBuilder.homeGraph(
                 type = NavType.StringType
             })
         ) {
-            PersonScreen()
+            PersonScreen(onBackClick = { navController.popBackStack() })
         }
     }
 }

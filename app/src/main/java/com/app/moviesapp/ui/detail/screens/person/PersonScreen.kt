@@ -19,7 +19,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material.icons.filled.NavigateBefore
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,6 +42,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.app.moviesapp.custom.image.MoviesImageView
 import com.app.moviesapp.custom.indicator.PagerIndicator
+import com.app.moviesapp.custom.loading.LoadingDialog
 import com.app.moviesapp.custom.popup.CustomImagePopUp
 import com.app.moviesapp.data.ui_models.PersonUIModel
 
@@ -52,9 +53,7 @@ fun PersonScreen(viewModel: PersonScreenViewModel = hiltViewModel(), onBackClick
     val context = LocalContext.current
 
     if (uiState.isLoading) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            CircularProgressIndicator()
-        }
+        LoadingDialog()
     }
     if (uiState.isError) {
         Toast.makeText(context, "Network error", Toast.LENGTH_LONG).show()
@@ -70,7 +69,8 @@ fun PersonScreen(viewModel: PersonScreenViewModel = hiltViewModel(), onBackClick
                 } else {
                     viewModel.addPersonToFavorite(uiState.personData)
                 }
-            })
+            }, onBackClick = onBackClick
+        )
     }
 }
 
@@ -80,7 +80,8 @@ fun PersonScreenUI(
     person: PersonUIModel,
     images: List<String>,
     isFavorite: Boolean,
-    onFavoriteClicked: (Boolean) -> Unit
+    onFavoriteClicked: (Boolean) -> Unit,
+    onBackClick: () -> Unit,
 ) {
     val pagerState = rememberPagerState {
         images.size
@@ -114,24 +115,25 @@ fun PersonScreenUI(
                             .fillMaxWidth()
                             .clickable {
                                 showImagePopup = true
-                            }, contentScale = ContentScale.FillWidth
+                            }, contentScale = ContentScale.Crop
                     )
                 }
             }
 
             val favoriteIcon =
                 if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder
+            val favoriteColor = if (isFavorite) Color.Red else Color.White
             Icon(imageVector = favoriteIcon,
                 "",
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .size(38.dp)
+                    .size(42.dp)
                     .padding(end = 16.dp, top = 16.dp)
                     .clickable {
                         onFavoriteClicked(isFavorite)
                     }
                     .shadow(50.dp),
-                tint = Color.White)
+                tint = favoriteColor)
             Box(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
@@ -143,6 +145,17 @@ fun PersonScreenUI(
                     indicatorShape = CircleShape
                 )
             }
+            Icon(imageVector = Icons.Filled.NavigateBefore,
+                "",
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .size(42.dp)
+                    .padding(start = 16.dp, top = 16.dp)
+                    .clickable {
+                        onBackClick()
+                    }
+                    .shadow(50.dp),
+                tint = Color.White)
         }
         Column(
             modifier = Modifier

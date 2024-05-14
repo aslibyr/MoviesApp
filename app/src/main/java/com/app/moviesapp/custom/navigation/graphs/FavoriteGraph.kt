@@ -99,7 +99,7 @@ fun NavGraphBuilder.favoriteGraph(
                 type = NavType.StringType
             })
         ) {
-            PersonScreen()
+            PersonScreen(onBackClick = { navController.popBackStack() })
         }
 
     }

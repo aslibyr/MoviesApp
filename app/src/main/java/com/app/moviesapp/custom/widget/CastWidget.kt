@@ -49,12 +49,21 @@ fun CastWidget(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
+                modifier = Modifier.weight(1f),
                 text = "Cast", style = MaterialTheme.typography.bodyMedium
+            )
+            Text(
+                text = "View all",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.secondary
             )
             Icon(
                 imageVector = Icons.Filled.ArrowForwardIos,
                 contentDescription = "",
-                modifier = Modifier.size(20.dp)
+                modifier = Modifier
+                    .size(20.dp)
+                    .padding(start = 8.dp),
+                tint = MaterialTheme.colorScheme.secondary
             )
         }
         LazyRow(Modifier.fillMaxWidth(), contentPadding = PaddingValues(start = 16.dp)) {
@@ -91,13 +100,13 @@ fun CastWidgetItem(
         Text(
             modifier = Modifier.padding(start = 8.dp, top = 4.dp),
             text = cast.castName,
-            fontSize = 12.sp,
+            fontSize = 14.sp,
             style = MaterialTheme.typography.bodyMedium
         )
         Text(
             modifier = Modifier.padding(start = 8.dp, bottom = 4.dp),
             text = cast.character,
-            fontSize = 10.sp,
+            fontSize = 12.sp,
             style = MaterialTheme.typography.bodyMedium
         )
     }

@@ -13,6 +13,8 @@ data class FavoriteMovieEntity(
     val title: String = "",
     val overview: String = "",
     val duration: String = "",
-    val movieImage: String = ""
+    val movieImage: String = "",
+    val voteAvg: String = "",
+    val releaseDate: String = ""
 ) : Parcelable
 
